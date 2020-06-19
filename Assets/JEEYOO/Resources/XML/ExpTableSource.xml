@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExpTable>
+	<Field Level="1" Exp="100" TotalExp="0"/>
+	<Field Level="2" Exp="150" TotalExp="250"/>
+	<Field Level="3" Exp="200" TotalExp="350"/>
+	<Field Level="4" Exp="300" TotalExp="500"/>
+	<Field Level="5" Exp="400" TotalExp="700"/>
+	<Field Level="6" Exp="600" TotalExp="1000"/>
+	<Field Level="7" Exp="800" TotalExp="1400"/>
+	<Field Level="8" Exp="1000" TotalExp="1800"/>
+	<Field Level="9" Exp="1300" TotalExp="2300"/>
+	<Field Level="10" Exp="1600" TotalExp="2900"/>
+</ExpTable>

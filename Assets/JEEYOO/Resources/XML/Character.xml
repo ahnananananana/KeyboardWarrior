@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CharacterInfo>
+  <Character>
+    <Name>Alien</Name>
+    <MaxHP>100</MaxHP>
+    <Level>1</Level>
+  </Character>
+</CharacterInfo>
