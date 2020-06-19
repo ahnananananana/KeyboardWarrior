@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
         CREATE, ALIVE, DEAD,
     }
 
-    public event DelVoid changeEvent;
+    public event DelVoid changeEvent;////
     public event DelVoid deadEvent;
 
     public STATE m_state = STATE.ALIVE;
@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
     public Experience m_EXP;
     public float m_Damage;
 
-    public float CurrHP
+    public float CurrHP////
     {
         get => m_CurrHP;
         set
@@ -41,7 +41,7 @@ public class Character : MonoBehaviour
             changeEvent?.Invoke();
         }
     }
-    public float CurrMP
+    public float CurrMP////
     {
         get => m_CurrMP;
         set
@@ -50,7 +50,7 @@ public class Character : MonoBehaviour
             changeEvent?.Invoke();
         }
     }
-    public float Exp
+    public float Exp////
     {
         get => m_EXP.m_CurrExp;
         set
@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
             changeEvent?.Invoke();
         }
     }
-    public int Level
+    public int Level////
     {
         get => m_EXP.m_Level;
         set
@@ -86,10 +86,10 @@ public class Character : MonoBehaviour
     {
         m_Damage = (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
         defender.CurrHP -= m_Damage;
-        if (defender.m_state != STATE.DEAD && defender.CurrHP <= 0)
+        if (defender.m_state != STATE.DEAD && defender.CurrHP <= 0)////
         {
             //m_EXP.GetExp((Monster)defender);
-            defender.deadEvent?.Invoke();
+            defender.deadEvent?.Invoke();////
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
         }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Player : Character
 {
+    ////
     [SerializeField]
     private hPlayerUI m_UI;
     [SerializeField]
@@ -48,4 +49,5 @@ public class Player : Character
         yield return new WaitForSeconds(3f);
         hLevelManager.current.GameOver();
     }
+    ////
 }

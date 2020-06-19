@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
     public float fMoveSpeed = 30.0f;
     public float fTime = 0.0f;
     Vector3 EffectPos;
-    Character m_character;
+    Character m_character;////
 
     Vector3 V3_Dir;
 
