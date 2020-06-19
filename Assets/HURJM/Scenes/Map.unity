@@ -489,7 +489,7 @@ Transform:
   m_Children:
   - {fileID: 2137011826}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &171146243 stripped
 Transform:
@@ -569,24 +569,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!4 &247104985 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 416390, guid: c76d2d3504ddb4847940a815cad04644,
@@ -988,7 +970,7 @@ PrefabInstance:
     - target: {fileID: 3031381733218001281, guid: 4db960fd268c04b41baad141ce216141,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3031381733218001281, guid: 4db960fd268c04b41baad141ce216141,
         type: 3}
@@ -1316,7 +1298,7 @@ PrefabInstance:
     - target: {fileID: 4465200329925693524, guid: 878094251e4306744bbf1e4143b60c9c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4465200329925693524, guid: 878094251e4306744bbf1e4143b60c9c,
         type: 3}
@@ -1343,6 +1325,12 @@ PrefabInstance:
       propertyPath: m_MainCamera
       value: 
       objectReference: {fileID: 725336804}
+    - target: {fileID: 9063993175724028743, guid: 878094251e4306744bbf1e4143b60c9c,
+        type: 3}
+      propertyPath: SwordAtkBox
+      value: 
+      objectReference: {fileID: 6519818893972005295, guid: 34173fb3928a39e498f32727fe638ee7,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 878094251e4306744bbf1e4143b60c9c, type: 3}
 --- !u!4 &637406959 stripped
@@ -20967,7 +20955,7 @@ PrefabInstance:
     - target: {fileID: 2873293882692005447, guid: 184034c21f1ecad48a2530b49ded82c2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2873293882692005447, guid: 184034c21f1ecad48a2530b49ded82c2,
         type: 3}
