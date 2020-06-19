@@ -64,7 +64,7 @@ public class CharCtrl : MonoBehaviour
     public RuntimeAnimatorController SwordAni;
     public Projectile proj;
 
-    
+    public Character character;
 
     private void Start()
     {
