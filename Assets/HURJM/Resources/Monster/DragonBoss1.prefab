@@ -1376,7 +1376,7 @@ GameObject:
   - component: {fileID: 3031381733119282010}
   - component: {fileID: 3031381733119282005}
   - component: {fileID: 3031381733119282004}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DragonBoss1
   m_TagString: Monster
   m_Icon: {fileID: 0}
