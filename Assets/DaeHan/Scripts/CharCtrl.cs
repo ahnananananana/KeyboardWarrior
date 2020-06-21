@@ -43,6 +43,11 @@ public class CharCtrl : MonoBehaviour
     public Transform BulletMuzzleTR;
     public Transform SwordAtkBoxTR;
 
+    public Vector3 TargetMonsterPos = Vector3.zero;
+
+    public bool isAttacking = false;
+    public bool isMoving = false;
+
     public bool bLongDistAtk = false;
 
     public float m_RotSpeed = 400f;
@@ -94,6 +99,12 @@ public class CharCtrl : MonoBehaviour
                     Picking(false);
                 }
 
+                if (Input.GetMouseButtonUp(0))
+                {
+                    isAttacking = false;
+                    isMoving = false;
+                }
+
                 if (Input.GetKeyDown(KeyCode.D))
                 {
                     ChangeState(STATE.ROLL);
@@ -112,10 +123,6 @@ public class CharCtrl : MonoBehaviour
                 {
                     ChangeWeapon(WEAPONTYPE.SWORD, Sword_Obj);
                 }
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    UsingAni.SetTrigger("Hit");
-                }
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     ChangeState(STATE.DEAD);
@@ -123,13 +130,25 @@ public class CharCtrl : MonoBehaviour
                 //-------------------------------------------//
                 break;
             case STATE.WALK:
+                if (Input.GetMouseButtonUp(0))
+                {
+                    isMoving = false;
+                }
                 Rotating(m_RotSpeed);
                 Moving(true);
                 break;
             case STATE.ROLL:
+                if (Input.GetMouseButtonUp(0))
+                {
+                    isMoving = false;
+                }
                 Roll();
                 break;
             case STATE.ATTACK:
+                if (Input.GetMouseButtonUp(0))
+                {
+                    isAttacking = false;
+                }
                 Rotating(m_AttackRotSpeed);
                 break;
             case STATE.DEAD:
@@ -244,37 +263,46 @@ public class CharCtrl : MonoBehaviour
         Ray ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 1000f, m_MonsterLayer))
+        if (LeftControl == false && isAttacking == false && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f, m_MonsterLayer))
         {
+            isAttacking = true;
+
             Vector3 pos = transform.position;
-            pos.x = hit.point.x;
-            pos.z = hit.point.z;
+            pos.x = hit.transform.gameObject.transform.position.x;
+            pos.z = hit.transform.gameObject.transform.position.z;
 
-            m_MoveData.TargetPosition = pos;
-
-            Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
+            TargetMonsterPos = pos;
+            m_MoveData.TargetPosition = TargetMonsterPos;
 
             if (UsingAni.GetBool("Walk") == true)
                 UsingAni.SetBool("Walk", false);
 
             ChangeState(STATE.ATTACK);
         }
+        else if (LeftControl == false && isAttacking == true && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f))
+        {
+            m_MoveData.TargetPosition = TargetMonsterPos;
 
-        else if (Physics.Raycast(ray, out hit, 1000f, m_GroundLayer))
+            if (UsingAni.GetBool("Walk") == true)
+                UsingAni.SetBool("Walk", false);
+
+            ChangeState(STATE.ATTACK);
+        }
+        else if (Physics.Raycast(ray, out hit, 1000.0f, m_GroundLayer))
         {
             Vector3 pos = transform.position;
             pos.x = hit.point.x;
             pos.z = hit.point.z;
             m_MoveData.TargetPosition = pos;
 
-            Debug.DrawRay(ray.origin, ray.direction * 30, Color.yellow);
-
             switch (LeftControl)
             {
                 case false:
+                    isMoving = true;
                     ChangeState(STATE.WALK);
                     break;
                 case true:
+                    isAttacking = true;
                     ChangeState(STATE.ATTACK);
                     break;
             }
@@ -300,7 +328,10 @@ public class CharCtrl : MonoBehaviour
 
     protected void Moving(bool bPlayer)
     {
-        UsingAni.SetBool("Walk", true);
+        if (UsingAni.GetBool("Walk") == false)
+        {
+            UsingAni.SetBool("Walk", true);
+        }
 
         if (bPlayer) // 이동중일 때 다른 입력을 받기 위함
         {
