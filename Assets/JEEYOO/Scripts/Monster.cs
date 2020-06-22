@@ -11,7 +11,8 @@ public class Monster : Character
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_CurrHP = m_MaxHP.m_CurrentValue;
+        m_CurrMP = m_MaxMP.m_CurrentValue;
     }
 
     // Update is called once per frame
