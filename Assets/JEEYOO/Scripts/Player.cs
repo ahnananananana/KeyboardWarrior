@@ -16,6 +16,9 @@ public class Player : Character
         m_EXP = new Experience();
         m_UI.Init(this);
 
+        InitStats();
+        
+
         deadEvent += Dead;
         changeEvent += m_UI.RefreshUI;
 
@@ -27,6 +30,29 @@ public class Player : Character
         m_Resistance.changeEvent += m_UI.RefreshUI;
         m_MoveSpeed.changeEvent += m_UI.RefreshUI;
         m_AttackSpeed.changeEvent += m_UI.RefreshUI;
+    }
+
+    private void Start()
+    {
+        
+    }
+
+    private void InitStats()
+    {
+        m_MaxHP.m_BaseValue = 500;
+        m_MaxMP.m_BaseValue = 100;
+
+        m_CurrHP = m_MaxHP.m_CurrentValue;
+        m_CurrMP = m_MaxMP.m_CurrentValue;
+
+        m_Attack.m_BaseValue = 40;
+        m_Defense.m_BaseValue = 20;
+
+        m_Magic.m_BaseValue = 40;
+        m_Resistance.m_BaseValue = 20;
+
+        m_MoveSpeed.m_BaseValue = 20;
+        m_AttackSpeed.m_BaseValue = 20;
     }
 
     private void Dead()

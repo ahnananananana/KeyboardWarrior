@@ -29,8 +29,13 @@ public class Character : MonoBehaviour
     public Stat m_MoveSpeed;
     public Stat m_AttackSpeed;
 
-    public Experience m_EXP;
+    public Experience m_EXP = new Experience();
     public float m_Damage;
+
+    private void Start()
+    {
+        
+    }
 
     public float CurrHP////
     {
@@ -88,7 +93,7 @@ public class Character : MonoBehaviour
         defender.CurrHP -= m_Damage;
         if (defender.m_state != STATE.DEAD && defender.CurrHP <= 0)////
         {
-            //m_EXP.GetExp((Monster)defender);
+            m_EXP.GetExp((Monster)defender);
             defender.deadEvent?.Invoke();////
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
