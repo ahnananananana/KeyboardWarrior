@@ -420,8 +420,11 @@ MonoBehaviour:
   GunTR: {fileID: 240772341718940823}
   SwordTR: {fileID: 5781012877479272286}
   ArrowMuzzleTR: {fileID: 7867068956474980505}
-  BulletMuzzleTR: {fileID: 4985207309100228334}
-  SwordAtkBoxTR: {fileID: 7633290323166914598}
+  BulletMuzzleTR: {fileID: 7633290323166914598}
+  SwordAtkBoxTR: {fileID: 4985207309100228334}
+  TargetMonsterPos: {x: 0, y: 0, z: 0}
+  isAttacking: 0
+  isMoving: 0
   bLongDistAtk: 0
   m_RotSpeed: 400
   m_AttackRotSpeed: 1200
@@ -439,6 +442,7 @@ MonoBehaviour:
   GunAni: {fileID: 9100000, guid: 4db10980cdfe3b04b8da55dca9670b8f, type: 2}
   SwordAni: {fileID: 9100000, guid: f3f0ace2cb0b70e499f594f2831f849a, type: 2}
   proj: {fileID: 754827083277716095, guid: a0b9ab767065404459becef12c72c8ac, type: 3}
+  character: {fileID: 0}
 --- !u!1 &841607541448802671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,7 +1774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5995941410122096166}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.45, z: 1.55}
+  m_LocalPosition: {x: 0, y: 1.487, z: 1.206}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2531561049736457292}
