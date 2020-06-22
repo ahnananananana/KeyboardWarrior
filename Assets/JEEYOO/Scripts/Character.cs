@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
     public Experience m_EXP = new Experience();
     public float m_Damage;
 
-    private void Start()
+    protected virtual void Start()
     {
         
     }

@@ -13,11 +13,9 @@ public class Player : Character
 
     private void Awake()
     {
+        InitStats();
         m_EXP = new Experience();
         m_UI.Init(this);
-
-        InitStats();
-        
 
         deadEvent += Dead;
         changeEvent += m_UI.RefreshUI;
@@ -32,7 +30,7 @@ public class Player : Character
         m_AttackSpeed.changeEvent += m_UI.RefreshUI;
     }
 
-    private void Start()
+    new void Start()
     {
         
     }
@@ -45,10 +43,10 @@ public class Player : Character
         m_CurrHP = m_MaxHP.m_CurrentValue;
         m_CurrMP = m_MaxMP.m_CurrentValue;
 
-        m_Attack.m_BaseValue = 40;
+        m_Attack.m_BaseValue = 80;
         m_Defense.m_BaseValue = 20;
 
-        m_Magic.m_BaseValue = 40;
+        m_Magic.m_BaseValue = 80;
         m_Resistance.m_BaseValue = 20;
 
         m_MoveSpeed.m_BaseValue = 20;
