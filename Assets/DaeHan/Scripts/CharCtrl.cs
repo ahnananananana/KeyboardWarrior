@@ -43,7 +43,7 @@ public class CharCtrl : MonoBehaviour
     public Transform BulletMuzzleTR;
     public Transform SwordAtkBoxTR;
 
-    public Vector3 TargetMonsterPos = Vector3.zero;
+    public GameObject TargettingMonster;
 
     public bool isAttacking = false;
     public bool isMoving = false;
@@ -271,8 +271,8 @@ public class CharCtrl : MonoBehaviour
             pos.x = hit.transform.gameObject.transform.position.x;
             pos.z = hit.transform.gameObject.transform.position.z;
 
-            TargetMonsterPos = pos;
-            m_MoveData.TargetPosition = TargetMonsterPos;
+            TargettingMonster = hit.transform.gameObject;
+            m_MoveData.TargetPosition = TargettingMonster.transform.position;
 
             if (UsingAni.GetBool("Walk") == true)
                 UsingAni.SetBool("Walk", false);
@@ -281,10 +281,7 @@ public class CharCtrl : MonoBehaviour
         }
         else if (LeftControl == false && isAttacking == true && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f))
         {
-            m_MoveData.TargetPosition = TargetMonsterPos;
-
-            if (UsingAni.GetBool("Walk") == true)
-                UsingAni.SetBool("Walk", false);
+            m_MoveData.TargetPosition = TargettingMonster.transform.position;
 
             ChangeState(STATE.ATTACK);
         }
