@@ -22,6 +22,7 @@ public abstract class hMonsterAI : MonoBehaviour
     [SerializeField]
     protected NavMeshAgent m_Agent;
 
+    [SerializeField]
     protected Character m_Target;
     protected Vector3 m_Des;
     public bool m_launch;
@@ -42,7 +43,7 @@ public abstract class hMonsterAI : MonoBehaviour
         m_Character.deadEvent += Dead;
         InitBTS();
     }
-    private void Update()
+    protected virtual void Update()
     {
         if (m_launch)
             m_RootNode.Evaluate();
