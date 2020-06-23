@@ -33,10 +33,10 @@ public class EnemyCltr : Monster
     {
         t_Text = (Instantiate(Resources.Load("frepab/Hit")) as GameObject).GetComponent<HitText>();
        // t_Text.GetComponentInChildren<Text>().text = ("Damage"); 
-        if (t_Text != null)
-        {
+        //if (t_Text != null)
+       // {
             t_Text.SetPosition(transform.Find("DamgeLog"), 0.15f);
-        }
+      //  }
     }
 
     void Start()

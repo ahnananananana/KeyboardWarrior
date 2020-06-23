@@ -10,6 +10,8 @@ public class Experience
     public float m_BaseExp = 100;
     public float m_ExpModifier = 1.2f;
 
+    public Experience() { }
+
     public void GetExp(Monster m)
     {
         m_TotalExp += m.EXP;
