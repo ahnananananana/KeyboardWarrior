@@ -260,6 +260,7 @@ public class CharCtrl : MonoBehaviour
 
     protected void Picking(bool LeftControl)
     {
+        if (m_MainCamera == null) m_MainCamera = Camera.main;
         Ray ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 

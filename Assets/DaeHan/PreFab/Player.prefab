@@ -299,7 +299,8 @@ GameObject:
   - component: {fileID: 3388992458487267891}
   - component: {fileID: 1168503876736530682}
   - component: {fileID: 9063993175724028743}
-  m_Layer: 0
+  - component: {fileID: 1959950659}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -330,7 +331,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841273533106184775}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
@@ -413,7 +414,7 @@ MonoBehaviour:
     type: 3}
   Bullet_Obj: {fileID: 8480829253863182150, guid: 5b6cd3d9b73b141439b006f77c1904ef,
     type: 3}
-  SwordAtkBox: {fileID: 4894949337751363256, guid: 87805f8c0728d584b84e72145c41945c,
+  SwordAtkBox: {fileID: 6519818893972005295, guid: 34173fb3928a39e498f32727fe638ee7,
     type: 3}
   UsingWeaponTR: {fileID: 0}
   BowTR: {fileID: 4761228642014667738}
@@ -422,7 +423,7 @@ MonoBehaviour:
   ArrowMuzzleTR: {fileID: 7867068956474980505}
   BulletMuzzleTR: {fileID: 7633290323166914598}
   SwordAtkBoxTR: {fileID: 4985207309100228334}
-  TargetMonsterPos: {x: 0, y: 0, z: 0}
+  TargettingMonster: {fileID: 0}
   isAttacking: 0
   isMoving: 0
   bLongDistAtk: 0
@@ -443,6 +444,22 @@ MonoBehaviour:
   SwordAni: {fileID: 9100000, guid: f3f0ace2cb0b70e499f594f2831f849a, type: 2}
   proj: {fileID: 754827083277716095, guid: a0b9ab767065404459becef12c72c8ac, type: 3}
   character: {fileID: 0}
+--- !u!54 &1959950659
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841273533106184775}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 68
+  m_CollisionDetection: 0
 --- !u!1 &841607541448802671
 GameObject:
   m_ObjectHideFlags: 0

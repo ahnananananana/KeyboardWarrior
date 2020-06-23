@@ -6,7 +6,7 @@ public class hZombieAI : hMonsterAI
 {
     protected override void InitBTS()
     {
-        m_Target = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //m_Target = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         m_RootNode = new hSelectorNode();
         hSequenceNode subRoot = new hSequenceNode();
         m_RootNode.children.Add(subRoot);

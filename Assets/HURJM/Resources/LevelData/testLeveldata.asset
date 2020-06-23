@@ -16,3 +16,18 @@ MonoBehaviour:
   m_IsBoss: 0
   m_MonsterList:
   - {fileID: 1896776672180440189, guid: 2ef891e3881d1bf46822768745744e32, type: 3}
+  m_BuffList:
+  - {fileID: 4417460897168021009, guid: 3efd35f8ead1f524aac313f3c42c93e1, type: 3}
+  - {fileID: 7010145560685590216, guid: 35c14f6662d0ae74c895c51c4316b73c, type: 3}
+  - {fileID: 1511375425092398572, guid: d49606e48a6f2ff4db24769500d77e73, type: 3}
+  - {fileID: 6580434433873374474, guid: 8ac83e1bacb5f5f438f7962a61bb4fda, type: 3}
+  - {fileID: 3687315082747870934, guid: 830e1a2fa492b4e46b2f1a6c10db96a2, type: 3}
+  - {fileID: 2612422812527426844, guid: e06317c854740f341803020fefb7abf4, type: 3}
+  - {fileID: 971859515153801711, guid: ae19c1081e62c524c9d884d9dffae018, type: 3}
+  - {fileID: 5012082027917460898, guid: cce3c76efcb1f474fa97d5eb868d6f94, type: 3}
+  - {fileID: 5733071356205091366, guid: 10a5874c464f3ab4ca39a98a27d993f3, type: 3}
+  - {fileID: 513913377253065812, guid: 56b84462c4a69e04d9db90ac740c026c, type: 3}
+  - {fileID: 3472176262636737107, guid: ad4c68530485ab3409e52f0421982056, type: 3}
+  - {fileID: 6016753582852787912, guid: adc084d46f56ac846a212c2a1652b4cf, type: 3}
+  - {fileID: 405524759415135868, guid: b8bdb4e6c22a1194d838bf3db5edc40d, type: 3}
+  - {fileID: 6135998799405146557, guid: 1eb050fd51b063d4fadfec5918c31ded, type: 3}

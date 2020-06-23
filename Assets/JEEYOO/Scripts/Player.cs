@@ -15,9 +15,15 @@ public class Player : Character
     {
         InitStats();
         m_EXP = new Experience();
-        m_UI.Init(this);
 
         deadEvent += Dead;
+    }
+
+    public void AttachUI(hPlayerUI inUI)
+    {
+        m_UI = inUI;
+
+        m_UI.Init(this);
         changeEvent += m_UI.RefreshUI;
 
         m_MaxHP.changeEvent += m_UI.RefreshUI;

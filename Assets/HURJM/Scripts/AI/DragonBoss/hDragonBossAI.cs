@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class hDragonBossAI : hMonsterAI
 {
@@ -13,6 +14,24 @@ public class hDragonBossAI : hMonsterAI
     private int m_PosAcc;
     [SerializeField]
     private hFlame m_Flame;
+    [SerializeField]
+    private int m_FlameDamage;
+    [SerializeField]
+    private float m_FlameDamageSpeed;
+    private float m_FlameLastDamageTime;
+
+    [SerializeField]
+    private Slider m_HealthBar;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        m_FlameLastDamageTime = Time.time - m_FlameDamageSpeed;
+        m_Flame.contact += FlameContact;
+        m_HealthBar.maxValue = m_Character.m_MaxHP.m_CurrentValue;
+        m_HealthBar.value = m_Character.m_MaxHP.m_CurrentValue;
+        m_Character.changeEvent += RefreshHealthBar;
+    }
 
     protected override void Update()
     {
@@ -21,14 +40,9 @@ public class hDragonBossAI : hMonsterAI
         base.Update();
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-        m_Flame.contact += FlameContact;
-    }
-
     protected override void InitBTS()
     {
+
         hSelectorNode subRoot = new hSelectorNode(new List<hBTSNode>());
         m_RootNode.children.Add(subRoot);
 
@@ -113,9 +127,22 @@ public class hDragonBossAI : hMonsterAI
         m_Flame.OnSet(false);
     }
 
-    public void FlameContact(Collider other)
+    private void FlameContact(Collider other)
     {
+        if (other.gameObject != m_Target.gameObject) return;
 
+        Debug.Log("Player");
+        if (m_FlameLastDamageTime + m_FlameDamageSpeed < Time.time)
+        {
+            Debug.Log("flame damage");
+            m_FlameLastDamageTime = Time.time;
+            m_Character.DealDamage(m_Target, m_FlameDamage);
+        }
+    }
+
+    private void RefreshHealthBar()
+    {
+        m_HealthBar.value = m_Character.CurrHP;
     }
 
 }

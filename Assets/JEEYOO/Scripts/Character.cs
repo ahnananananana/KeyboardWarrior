@@ -87,13 +87,20 @@ public class Character : MonoBehaviour
         m_AttackSpeed.IncreaseBaseValue(1.05f);
     }
 
-    public void DealDamage(Character defender)
+    public void DealDamage(Character defender, float inDamage = 0f)
     {
-        m_Damage = (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
+        if(inDamage > 0)
+            m_Damage = (Random.Range(0.95f, 1.05f) * inDamage - defender.m_Defense.m_CurrentValue);
+        else
+            m_Damage = (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
+        if (m_Damage < 0)
+            m_Damage = 0;
+
         defender.CurrHP -= m_Damage;
         if (defender.m_state != STATE.DEAD && defender.CurrHP <= 0)////
         {
-            m_EXP.GetExp((Monster)defender);
+            if(defender.CompareTag("Monster"))
+                m_EXP.GetExp((Monster)defender);
             defender.deadEvent?.Invoke();////
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
