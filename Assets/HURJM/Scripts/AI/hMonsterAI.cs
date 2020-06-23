@@ -36,7 +36,7 @@ public abstract class hMonsterAI : MonoBehaviour
     public bool launch { get => m_launch; set => m_launch = value; }
     public Collider myCollider { get => m_Collider; set => m_Collider = value; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_RootNode = new hSelectorNode();
         m_Collider = GetComponent<Collider>();

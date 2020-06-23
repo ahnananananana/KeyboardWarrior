@@ -21,8 +21,9 @@ public class hDragonBossAI : hMonsterAI
         base.Update();
     }
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         m_Flame.contact += FlameContact;
     }
 
