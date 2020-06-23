@@ -18,8 +18,12 @@ public class hDragonBossAI : hMonsterAI
     {
         m_RandomVal = Random.Range(0, 100);
         m_PosAcc = 0;
-        Debug.Log(m_RandomVal);
         base.Update();
+    }
+
+    private void Start()
+    {
+        m_Flame.contact += FlameContact;
     }
 
     protected override void InitBTS()
@@ -106,6 +110,11 @@ public class hDragonBossAI : hMonsterAI
     public void EndFlameAttack()
     {
         m_Flame.OnSet(false);
+    }
+
+    public void FlameContact(Collider other)
+    {
+
     }
 
 }
