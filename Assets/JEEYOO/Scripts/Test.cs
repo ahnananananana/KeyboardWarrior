@@ -13,12 +13,13 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("player exp ==" + player.m_EXP.m_CurrExp);
-        Debug.Log("player lev ==" + player.m_EXP.m_Level);
-        Debug.Log("player atk == " + player.m_Attack.m_CurrentValue);
-        Debug.Log("player base atk == " + player.m_Attack.m_BaseValue);
-        Debug.Log("monster max hp == " + monster.m_MaxHP.m_CurrentValue);
-        Debug.Log("monster curr hp == " + monster.m_CurrHP);
+        Debug.Log(monster.GetComponent<Animator>());
+        //Debug.Log("player exp ==" + player.m_EXP.m_CurrExp);
+        //Debug.Log("player lev ==" + player.m_EXP.m_Level);
+        //Debug.Log("player atk == " + player.m_Attack.m_CurrentValue);
+        //Debug.Log("player base atk == " + player.m_Attack.m_BaseValue);
+        //Debug.Log("monster max hp == " + monster.m_MaxHP.m_CurrentValue);
+        //Debug.Log("monster curr hp == " + monster.m_CurrHP);
     }
 
     // Update is called once per frame
