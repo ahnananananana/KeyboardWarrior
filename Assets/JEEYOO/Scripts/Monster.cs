@@ -11,6 +11,7 @@ public class Monster : Character
     // Start is called before the first frame update
     new void Start()
     {
+        base.Start(); // 부모스크립트의 Start실행(대한)
         InitStats();
     }
 

@@ -89246,10 +89246,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.0666667
-    functionName: ChangeState
-    data: STATE.IDLE
-    objectReferenceParameter: {fileID: 6404130252133908851, guid: 878094251e4306744bbf1e4143b60c9c,
-      type: 3}
+    functionName: ChangeCtrlState
+    data: CTRLSTATE.IDLE
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

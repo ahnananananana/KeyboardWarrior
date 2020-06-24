@@ -992,7 +992,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: DragonBoss1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3031381733119282005, guid: 4db960fd268c04b41baad141ce216141, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4db960fd268c04b41baad141ce216141, type: 3}
 --- !u!1 &469560721
 GameObject:
@@ -1331,6 +1332,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6519818893972005295, guid: 34173fb3928a39e498f32727fe638ee7,
         type: 3}
+    - target: {fileID: 9063993175724028743, guid: 878094251e4306744bbf1e4143b60c9c,
+        type: 3}
+      propertyPath: MoveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 878094251e4306744bbf1e4143b60c9c, type: 3}
 --- !u!4 &637406959 stripped
@@ -3291,6 +3297,47 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 762591934236057932}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1460062743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3031381733218216165, guid: 4db960fd268c04b41baad141ce216141,
+    type: 3}
+  m_PrefabInstance: {fileID: 452837864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1460062745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460062743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dfb0b372cbb28d4c9f0f4f9a6194c38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_state: 1
+  m_ID: 0
+  m_CharName: 
+  m_MaxHP:
+    m_BaseValue: 0
+  m_MaxMP:
+    m_BaseValue: 0
+  m_CurrHP: 0
+  m_CurrMP: 0
+  m_Attack:
+    m_BaseValue: 0
+  m_Defense:
+    m_BaseValue: 0
+  m_Magic:
+    m_BaseValue: 0
+  m_Resistance:
+    m_BaseValue: 0
+  m_MoveSpeed:
+    m_BaseValue: 0
+  m_AttackSpeed:
+    m_BaseValue: 0
+  m_Damage: 0
+  renderers: []
 --- !u!4 &1473729424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 409034, guid: a4c18952442944083b1fddc06ba477c2,
