@@ -84,6 +84,8 @@ public class FireBomb : Monster
                     m_Animator.SetBool("isTrace", true);
                     break;
                 case STATE.ATTACK:
+                    m_NVAgent.Stop();
+                    m_Animator.SetBool("isAttack", true);
                     break;
                 case STATE.DEAD:
                     break;
