@@ -26,7 +26,7 @@ public class hZombieAI : hMonsterAI
     {
         if (Vector3.Distance(transform.position, m_Target.transform.position) < m_AttackRange)
         {
-            Debug.Log("attack");
+           // Debug.Log("attack");
             m_Character.DealDamage(m_Target);
         }
     }

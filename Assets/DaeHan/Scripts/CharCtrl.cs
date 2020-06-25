@@ -16,6 +16,12 @@ public class CharCtrl : Character
     }
     public WEAPONTYPE weapontype = WEAPONTYPE.BOW;
 
+    public enum LAYERSTATE
+    {
+        PLAYER, IMMORTAL
+    }
+    LAYERSTATE layerstate = LAYERSTATE.PLAYER;
+
     protected struct MoveData // 움직임 관여 타겟과 자신의 거리, 트랜스폼정보
     {
         public Vector3 TargetPosition;
@@ -70,7 +76,6 @@ public class CharCtrl : Character
 
     new void Start()
     {
-        base.Start();
         UsingAni = GetComponent<Animator>();
         ChangeWeapon(WEAPONTYPE.BOW, Bow_Obj);
     }
@@ -144,7 +149,7 @@ public class CharCtrl : Character
                 break;
             case CTRLSTATE.ATTACK:
                 if (Input.GetMouseButtonUp(0))
-                {
+                {                          
                     isAttacking = false;
                 }
                 Rotating(m_AttackRotSpeed);
@@ -156,7 +161,7 @@ public class CharCtrl : Character
 
     protected virtual void ChangeCtrlState(CTRLSTATE s)
     {
-        if (ctrlstate == s) return;
+        //if (ctrlstate == s) return;
         ctrlstate = s;
 
         switch (s)
@@ -170,6 +175,7 @@ public class CharCtrl : Character
                 break;
             case CTRLSTATE.ROLL:
                 UsingAni.SetTrigger("Roll");
+                ChangeLayer(LAYERSTATE.IMMORTAL);
                 break;
             case CTRLSTATE.ATTACK:
                 Attack();
@@ -208,13 +214,28 @@ public class CharCtrl : Character
         Weapon_Obj.transform.rotation = UsingWeaponTR.rotation;
     }
 
+    void ChangeLayer(LAYERSTATE s)
+    {
+        layerstate = s;
+
+        switch(s)
+        {
+            case LAYERSTATE.PLAYER:
+                this.gameObject.layer = LayerMask.NameToLayer("Player");
+                break;
+            case LAYERSTATE.IMMORTAL:
+                this.gameObject.layer = LayerMask.NameToLayer("Immortal");
+                break;
+        }
+    }
+
     protected void Roll() // 구르기
     {
-        Vector3 pos = transform.localPosition;
+        Vector3 pos = transform.position;
         float delta = m_RollSpeed * Time.smoothDeltaTime;
         Vector3 target = pos + this.transform.forward * delta;
 
-        transform.localPosition = target;
+        transform.position = target;
     }
 
     protected void Attack() // 공격
@@ -263,8 +284,7 @@ public class CharCtrl : Character
         Ray ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (LeftControl == false && isAttacking == false && isMoving == false && 
-            Physics.Raycast(ray, out hit, 1000.0f, m_MonsterLayer)) // 타겟팅 공격 시작시 1회 호출되어 몬스터의 정보를 담기 위함
+        if (LeftControl == false && isAttacking == false && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f, m_MonsterLayer)) // 타겟팅 공격 시작시 1회 호출되어 몬스터의 정보를 담기 위함
         {
             isAttacking = true;
 
@@ -274,18 +294,34 @@ public class CharCtrl : Character
 
             TargettingMonster = hit.transform.gameObject;
             m_MoveData.TargetPosition = TargettingMonster.transform.position;
+            ReadyMove();
 
-            if (UsingAni.GetBool("Walk") == true)
-                UsingAni.SetBool("Walk", false);
-
-            ChangeCtrlState(CTRLSTATE.ATTACK);
+            if (bLongDistAtk == false && m_MoveData.MoveDist > 4f)
+            {
+                ChangeCtrlState(CTRLSTATE.WALK);
+            }
+            else
+            {
+                if (UsingAni.GetBool("Walk") == true)
+                    UsingAni.SetBool("Walk", false);
+                ChangeCtrlState(CTRLSTATE.ATTACK);
+            }
         }
-        else if (LeftControl == false && isAttacking == true && isMoving == false &&
-            Physics.Raycast(ray, out hit, 1000.0f)) // 타겟팅 공격시 마우스를 쭉 누르고 있을 떄
+        else if (LeftControl == false && isAttacking == true && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f)) // 타겟팅 공격시 마우스를 쭉 누르고 있을 떄
         {
             m_MoveData.TargetPosition = TargettingMonster.transform.position;
-        
-            ChangeCtrlState(CTRLSTATE.ATTACK);
+            ReadyMove();
+
+            if (bLongDistAtk == false && m_MoveData.MoveDist > 4f)
+            {
+                ChangeCtrlState(CTRLSTATE.WALK);
+            }
+            else
+            {
+                if (UsingAni.GetBool("Walk") == true)
+                    UsingAni.SetBool("Walk", false);
+                ChangeCtrlState(CTRLSTATE.ATTACK);
+            }
         }
         else if (Physics.Raycast(ray, out hit, 1000.0f, m_GroundLayer)) // 논타겟 공격 or 이동
         {
@@ -334,7 +370,7 @@ public class CharCtrl : Character
 
         if (Input.GetMouseButton(0)) // 이동중일 때 다른 입력을 받기 위함
         {
-            ChangeCtrlState(CTRLSTATE.IDLE);
+            ChangeCtrlState(CTRLSTATE.WALK);
 
             if (Input.GetKey(KeyCode.LeftControl))
             {

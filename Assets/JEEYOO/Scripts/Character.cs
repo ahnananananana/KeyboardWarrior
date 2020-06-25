@@ -31,12 +31,11 @@ public class Character : MonoBehaviour
 
     public Experience m_EXP = new Experience();
     public float m_Damage;
-    public SkinnedMeshRenderer[] renderers;// 추가한거(대한)
 
 
     protected virtual void Start()
     {
-        renderers = this.GetComponentsInChildren<SkinnedMeshRenderer>(); // 아웃라인 (대한)
+
     }
 
     public float CurrHP////
@@ -124,7 +123,11 @@ public class Character : MonoBehaviour
             case STATE.ALIVE:
                 break;
             case STATE.DEAD:
-                SetNullOutline(); //추가 (대한)
+                if (this.tag == "Monster") // 죽었을 때 아웃라인 제거(대한)
+                {
+                    Monster DeadMonster = this.GetComponent<Monster>();
+                    DeadMonster.SetNullOutline();
+                }
                 break;
         }
     }
@@ -140,37 +143,6 @@ public class Character : MonoBehaviour
             case STATE.DEAD:
                 //Destroy(this.gameObject);
                 break;
-        }
-    }
-
-    private void OnMouseEnter() // 마우스 갖다댔을 때 아웃라인 생성(대한)
-    {
-        if(this.tag == "Monster" && !Input.GetMouseButton(0))
-        {
-            for(int i = 0; i < renderers.Length; ++i)
-            {
-                SkinnedMeshRenderer renderer = renderers[i];
-                renderer.material.SetFloat("_OutlineWidth", 0.06f);
-                renderer.material.SetColor("_OutlineColor", new Color(1f, 0f, 0f));
-            }
-        }
-    }
-
-    private void OnMouseExit() // 마우스 뗐을 때(대한)
-    {
-        if (this.tag == "Monster" && !Input.GetMouseButton(0))
-        {
-            SetNullOutline();
-        }
-    }
-
-    public void SetNullOutline() // 많이 쓰일것같아서 만든 아웃라인 없애는 함수(대한)
-    {
-        for (int i = 0; i < renderers.Length; ++i)
-        {
-            SkinnedMeshRenderer renderer = renderers[i];
-            renderer.material.SetFloat("_OutlineWidth", 0.0f);
-            renderer.material.SetColor("_OutlineColor", new Color(0f, 0f, 0f));
         }
     }
 }
