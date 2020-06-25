@@ -18,9 +18,12 @@ public class FireBomb : Monster
     private Transform playerTransform;
     private NavMeshAgent m_NVAgent;
     private Animator m_Animator;
+    
 
     private float m_TraceDist = 20f;
     private float m_AttackDist = 15f;
+
+    private Vector3 firePosition;
 
     private bool isDead = false;
 
@@ -33,6 +36,7 @@ public class FireBomb : Monster
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         m_NVAgent = this.gameObject.GetComponent<NavMeshAgent>();
         m_Animator = this.gameObject.GetComponent<Animator>();
+        
 
         m_NVAgent.destination = playerTransform.position;
 
@@ -43,7 +47,10 @@ public class FireBomb : Monster
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            FireProjectile();
+        }
     }
 
     IEnumerator CheckState()
@@ -108,5 +115,12 @@ public class FireBomb : Monster
         m_AttackSpeed.m_BaseValue = 20;
 
         m_MonsterEXP = 100;
+    }
+
+    private void FireProjectile()
+    {
+        
+        GameObject projectile = Instantiate((GameObject)Resources.Load("Prefabs/explode_2")) as GameObject;
+        projectile.transform.position = this.gameObject.transform.position;
     }
 }
