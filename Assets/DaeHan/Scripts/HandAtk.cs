@@ -11,13 +11,9 @@ public class HandAtk : MonoBehaviour
     STATE state = STATE.CREATE;
 
     public float fTime = 0.0f;
-    public float fDeleteTime = 0.1f; // 삭제시간
+    public float fDeleteTime = 0.1f;
     public GameObject Obj_CrashEffect;
     public GameObject CrashMonster;
-
-    Character m_character;
-
-    public Character character { get => m_character; set => m_character = value; }
 
     private void Update()
     {
@@ -73,13 +69,25 @@ public class HandAtk : MonoBehaviour
 
     void Damage()
     {
-        m_character.DealDamage(CrashMonster.GetComponent<Character>());
+        Debug.Log("타격");
     }
 
     void Delete()
     {
         Destroy(gameObject);
     }
+
+    /*
+    public void Damage(Character defender)
+    {
+        defender.m_CurrHP -= (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
+        if (defender.m_CurrHP <= 0)
+        {
+            defender.ChangeState(Character.STATE.DEAD);
+            defender.StateProcess();
+        }
+    }
+    */
 
     void OnTriggerEnter(Collider obj)
     {

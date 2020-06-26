@@ -48612,8 +48612,8 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.0666667
-    functionName: ChangeCtrlState
-    data: CTRLSTATE.IDLE
+    functionName: ChangeState
+    data: STATE.IDLE
     objectReferenceParameter: {fileID: -927199367670048503, guid: 1b76ed26df6d5ad468c351cbfa3e09af,
       type: 3}
     floatParameter: 0

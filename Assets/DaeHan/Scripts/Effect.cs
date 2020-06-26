@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
-    public enum STATE 
+    public enum STATE
     {
         CREATE,SHOW,DELETE
     }
     public STATE state = STATE.CREATE;
     
-    public float fDeleteEffectTime = 2.0f; // 삭제시간
+    public float fDeleteEffectTime = 2.0f;
     public float fTime = 0.0f;
 
     private void Start()
     {
-        ChangeState(STATE.SHOW); // 이펙트 생성시 
+        ChangeState(STATE.SHOW);
     }
 
     void ChangeState(STATE s)
