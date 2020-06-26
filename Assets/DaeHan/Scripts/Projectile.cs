@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
     public float fMoveSpeed = 30.0f;
     public float fTime = 0.0f;
     Vector3 EffectPos;
-    Character m_character;////
+    Character m_character;
 
     Vector3 V3_Dir;
 
@@ -91,7 +91,7 @@ public class Projectile : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, delta, Monster)) // 충돌이 났을 때
         {
-            CrashMonster = hit.transform.gameObject; // == 충돌한 개체
+            CrashMonster = hit.transform.gameObject; // 충돌한 개체
             EffectPos = CrashMonster.transform.position;
             EffectPos.y += 1f;
             ChangeState(STATE.CRASH);
@@ -117,26 +117,13 @@ public class Projectile : MonoBehaviour
 
     void Out()
     {
-        Debug.Log("투사체 삭제");
         Destroy(gameObject);
     }
 
     void Damage()
     {
         character.DealDamage(CrashMonster.GetComponent<Character>());
-        Debug.Log("투사체 명중");
     }
-
-    /*public void Damage(Character defender)
-    {
-        defender.m_CurrHP -= (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
-        if (defender.m_CurrHP <= 0)
-        {
-            defender.ChangeState(Character.STATE.DEAD);
-            defender.StateProcess();
-        }
-        Debug.Log("투사체 명중");
-    }*/
 
     public void OnFire(Vector3 dir)
     {
