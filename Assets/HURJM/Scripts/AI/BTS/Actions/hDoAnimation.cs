@@ -8,14 +8,16 @@ public class hDoAnimation : hAiAction
     private int m_AnimationHash;
     private string m_AnimationName;
     private Transform m_LookAt;
+    private bool m_ReturnEnd;
 
-    public hDoAnimation(hMonsterAI inMonster, string inAnimationName, Transform inLookAt = null)
+    public hDoAnimation(hMonsterAI inMonster, string inAnimationName, bool inReturnEnd = true, Transform inLookAt = null)
     {
         m_Monster = inMonster;
         m_Animator = m_Monster.animator;
         m_AnimationName = inAnimationName;
         m_AnimationHash = Animator.StringToHash(inAnimationName);
         m_LookAt = inLookAt;
+        m_ReturnEnd = inReturnEnd;
     }
 
     protected override NodeState Execute()
@@ -25,14 +27,24 @@ public class hDoAnimation : hAiAction
 
         if(m_State == NodeState.RUNNING)
         {
-            if (m_Animator.IsInTransition(0) && m_Animator.GetCurrentAnimatorStateInfo(0).IsName(m_AnimationName))
+            if(m_ReturnEnd)
             {
-                return NodeState.SUCCESS;
+                if (m_Animator.IsInTransition(0) && m_Animator.GetCurrentAnimatorStateInfo(0).IsName(m_AnimationName))
+                {
+                    return NodeState.SUCCESS;
+                }
+                else
+                {
+                    //m_Animator.SetBool(m_AnimationHash, false);
+                    return NodeState.RUNNING;
+                }
             }
             else
             {
-                //m_Animator.SetBool(m_AnimationHash, false);
-                return NodeState.RUNNING;
+                if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName(m_AnimationName) && m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .9f)
+                    return NodeState.SUCCESS;
+                else
+                    return NodeState.RUNNING;
             }
         }
         else

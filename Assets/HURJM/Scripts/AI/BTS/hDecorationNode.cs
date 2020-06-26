@@ -30,9 +30,9 @@ public class hDecorationNode : hBTSNode
 
     public override NodeState Evaluate()
     {
-        bool condition = m_Condition();
-        if (!m_IsWatch && m_State == NodeState.RUNNING)
-            condition = true;
+        bool condition = true;
+        if(m_IsWatch || m_State != NodeState.RUNNING)
+            condition = m_Condition();
 
         if (condition)
         {

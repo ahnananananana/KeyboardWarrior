@@ -13,6 +13,7 @@ public class hDoAction : hActionNode
 
     protected override NodeState Execute()
     {
-         return m_Action();
+        m_State = m_Action();
+         return m_State;
     }
 }

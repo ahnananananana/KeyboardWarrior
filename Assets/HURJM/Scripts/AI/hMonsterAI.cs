@@ -35,6 +35,7 @@ public abstract class hMonsterAI : MonoBehaviour
     }
     protected Vector3 m_Des;
     public bool m_launch;
+    [SerializeField]
     protected Collider m_Collider;
     public float attackRange { get => m_AttackRange; set => m_AttackRange = value; }
     public Transform root { get => m_Root; set => m_Root = value; }
@@ -48,7 +49,8 @@ public abstract class hMonsterAI : MonoBehaviour
     protected virtual void Awake()
     {
         m_RootNode = new hSelectorNode();
-        m_Collider = GetComponent<Collider>();
+        if(m_Collider == null)
+            m_Collider = GetComponent<Collider>();
         m_Character.deadEvent += Dead;
     }
 

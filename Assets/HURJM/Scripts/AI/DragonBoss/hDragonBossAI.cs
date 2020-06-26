@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
+using UnityEngine.Timeline;
+using UnityEngine.Playables;
 
 public class hDragonBossAI : hMonsterAI
 {
@@ -23,6 +26,21 @@ public class hDragonBossAI : hMonsterAI
     [SerializeField]
     private Slider m_HealthBar;
 
+    [SerializeField]
+    private float m_Pattern2Interval;
+    private float m_LastPattern2Time;
+    [SerializeField]
+    private hFlameBomb m_FlameBombPrefab;
+    private List<hFlameBomb> m_FlameBombList;
+    [SerializeField]
+    private int m_FlameBombNum;
+    [SerializeField]
+    private float m_FlameBombDamage;
+    [SerializeField]
+    private BoxCollider m_Boundary;
+    [SerializeField]
+    private PlayableDirector m_Intro;
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,6 +49,11 @@ public class hDragonBossAI : hMonsterAI
         m_HealthBar.maxValue = m_Character.m_MaxHP.m_CurrentValue;
         m_HealthBar.value = m_Character.m_MaxHP.m_CurrentValue;
         m_Character.changeEvent += RefreshHealthBar;
+
+        m_HealthBar.enabled = false;
+
+        m_LastPattern2Time = -m_Pattern2Interval;
+        m_FlameBombList = new List<hFlameBomb>();
     }
 
     protected override void Update()
@@ -47,23 +70,22 @@ public class hDragonBossAI : hMonsterAI
         m_RootNode.children.Add(subRoot);
 
 
-        hDecorationNode isEncounter = new hDecorationNode(IsEncounter);
+        hDecorationNode isEncounter = new hDecorationNode(IsEncounter, false);
 
         hSequenceNode encounter = new hSequenceNode();
         isEncounter.child = encounter;
-
+        
+        hActionNode setMet = new hDoAction(() => { m_IsMet = true; m_Intro.Play(); return NodeState.SUCCESS; });
         hActionNode scream = new hDoAnimation(this, "Scream", m_Target.transform);
 
-        hDoAction setMet = new hDoAction(() => { m_IsMet = true; return NodeState.SUCCESS; });
-
-        encounter.children.Add(scream);
         encounter.children.Add(setMet);
+        encounter.children.Add(scream);
 
-
+/*
         hDecorationNode isPattern1 = new hDecorationNode(false);
-        isPattern1.condition = () => { if (m_Character.CurrHP > m_Character.m_MaxHP.m_CurrentValue / 2) return true; return false; };
+        isPattern1.condition = () => { if (m_Character.CurrHP > m_Character.m_MaxHP.m_CurrentValue / 2) return true; return false; };*/
         hSelectorNode pattern1 = new hSelectorNode();
-        isPattern1.child = pattern1;
+        //isPattern1.child = pattern1;
 
         hDecorationNode isClawAttack = new hDecorationNode(false);
         isClawAttack.condition = () => { m_PosAcc += m_Pattern1Pos[0]; if (m_RandomVal < m_PosAcc) return true; return false; };
@@ -100,15 +122,107 @@ public class hDragonBossAI : hMonsterAI
         pattern1.children.Add(isBiteAttack);
         pattern1.children.Add(isFlameAttack);
 
+
+
+        hDecorationNode isPattern2 = new hDecorationNode(false);
+        isPattern2.condition = IsPattern2;
+        hSequenceNode pattern2 = new hSequenceNode();
+        isPattern2.child = pattern2;
+
+        hActionNode offCollider = new hDoAction(() => { m_Collider.enabled = false; return NodeState.SUCCESS; });
+        hActionNode takeOff = new hDoAnimation(this, "Take Off", false);
+        hActionNode goUp = new hDoAction(() => { return MoveVertical(3f, 20f); });
+        hActionNode castFlameBomb = new hDoAction(CastFlameBomb);
+        hActionNode isEnd = new hDoAction(()=> { if (m_FlameBombList.Count == 0) return NodeState.SUCCESS; return NodeState.RUNNING; });
+        hActionNode goDown = new hDoAction(() => { return MoveVertical(3f, 0); });
+        hActionNode land = new hDoAnimation(this, "Land", false);
+        hActionNode resetCoolTime = new hDoAction(() => { m_LastPattern2Time = Time.time; return NodeState.SUCCESS; });
+
+
+        pattern2.children.Add(offCollider);
+        pattern2.children.Add(takeOff);
+        pattern2.children.Add(goUp);
+        pattern2.children.Add(castFlameBomb);
+        pattern2.children.Add(isEnd);
+        pattern2.children.Add(goDown);
+        pattern2.children.Add(land);
+        pattern2.children.Add(resetCoolTime);
+
+
         subRoot.children.Add(isEncounter);
-        subRoot.children.Add(isPattern1);
+        subRoot.children.Add(isPattern2);
+        subRoot.children.Add(pattern1);
     }
+
+    private NodeState MoveVertical(float inSpeed, float inHeight)
+    {
+        m_Collider.enabled = false;
+        float speed = inSpeed;
+        float distance = m_Root.position.y - inHeight;
+        if (Mathf.Abs(distance) > 0.1f)
+        {
+            Vector3 newPos = m_Root.position;
+            float direction;
+            if (distance > 0) direction = -1f;
+            else direction = 1f;
+            newPos.y += direction * speed * Time.smoothDeltaTime;
+            m_Root.position = newPos;
+            return NodeState.RUNNING;
+        }
+        return NodeState.SUCCESS;
+    }
+
+    private void FlameBombDamage(Collider inTarget)
+    {
+        if (inTarget.gameObject != m_Target.gameObject) return;
+
+        if (m_FlameLastDamageTime + m_FlameDamageSpeed < Time.time)
+        {
+            m_FlameLastDamageTime = Time.time;
+            m_Character.DealDamage(m_Target, m_FlameBombDamage);
+        }
+    }
+
+    private NodeState CastFlameBomb()
+    {
+        for (int i = 0; i < m_FlameBombNum; ++i)
+        {
+            hFlameBomb flameBomb = Instantiate(m_FlameBombPrefab);
+
+            Vector3 pos =
+                new Vector3(
+                    Random.Range(m_Boundary.bounds.min.x, m_Boundary.bounds.max.x), 
+                    0f, 
+                    Random.Range(m_Boundary.bounds.min.z, m_Boundary.bounds.max.z)
+                    );
+            flameBomb.SetPos(pos);
+            flameBomb.character = m_Character;
+            flameBomb.triggerEvent += FlameBombDamage;
+            flameBomb.endEvent += (hFlameBomb inBomb) => { m_FlameBombList.Remove(inBomb); };
+            m_FlameBombList.Add(flameBomb);
+        }
+        return NodeState.SUCCESS;
+    }
+
+    private bool IsPattern2()
+    {
+        if (m_Character.CurrHP < m_Character.m_MaxHP.m_CurrentValue / 2 && m_LastPattern2Time + m_Pattern2Interval < Time.time)
+        {
+            Debug.Log("Pattern2");
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     private bool IsEncounter()
     {
         if (m_IsMet)
             return false;
 
+        m_HealthBar.enabled = true;
         return true;
     }
 
@@ -131,10 +245,8 @@ public class hDragonBossAI : hMonsterAI
     {
         if (other.gameObject != m_Target.gameObject) return;
 
-        Debug.Log("Player");
         if (m_FlameLastDamageTime + m_FlameDamageSpeed < Time.time)
         {
-            Debug.Log("flame damage");
             m_FlameLastDamageTime = Time.time;
             m_Character.DealDamage(m_Target, m_FlameDamage);
         }
