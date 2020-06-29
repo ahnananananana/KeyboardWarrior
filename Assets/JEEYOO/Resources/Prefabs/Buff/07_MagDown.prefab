@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 02cebb0690e015642b7b8988ad57458a, type: 3}
+  buffName: "\uB9C8\uBC95 \uAC10\uC18C"
