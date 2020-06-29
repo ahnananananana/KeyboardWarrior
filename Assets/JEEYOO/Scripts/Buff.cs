@@ -5,6 +5,7 @@ using UnityEngine;
 public class Buff : MonoBehaviour
 {
     public Sprite icon;
+    public string buffName;
 
     public virtual void ApplyBuff(Character c) { }
 
