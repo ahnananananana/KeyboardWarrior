@@ -11,7 +11,7 @@ public class hZombieAI : hMonsterAI
         hSequenceNode subRoot = new hSequenceNode();
         m_RootNode.children.Add(subRoot);
 
-        hSearchAndFollowAction searchAndFollow = new hSearchAndFollowAction(this, m_Target.transform, null, m_AttackRange);
+        hSearchAndFollowAction searchAndFollow = new hSearchAndFollowAction(this, m_Target.transform, ref m_AttackRange);
         hActionNode attack = new hDoAnimation(this, "Attack", m_Target.transform);
 
         hSequenceNode pattern = new hSequenceNode();

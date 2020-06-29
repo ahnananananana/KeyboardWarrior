@@ -27,13 +27,16 @@ public class hLevelManager : MonoBehaviour
     }
 
     [SerializeField]
-    private hLevelData[] m_LevelDataList;
+    private hLevelData[] m_NormalLevelDataList;
+    [SerializeField]
+    private hLevelData[] m_BossLevelDataList;
     [SerializeField]
     private int m_CurLevel = 1;
 
-    public MapType mapType;
+    private MapType m_NextMapType;
 
     public int curLevel { get => m_CurLevel; set => m_CurLevel = value; }
+    public MapType nextMapType { get => m_NextMapType; set => m_NextMapType = value; }
 
     private void Awake()
     {
@@ -51,7 +54,13 @@ public class hLevelManager : MonoBehaviour
 
     public hLevelData LoadNextLevel()
     {
-        return m_LevelDataList[0];
+        switch(m_NextMapType)
+        {
+            case MapType.BOSS:
+                return m_BossLevelDataList[0];
+            default:
+                return m_NormalLevelDataList[0];
+        }
     }
 
     public void GameOver()

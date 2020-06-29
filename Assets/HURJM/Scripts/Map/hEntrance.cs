@@ -12,6 +12,8 @@ public class hEntrance : MonoBehaviour
     [SerializeField]
     private MapType m_NextMapType;
     private Collider m_Collider;
+    [SerializeField]
+    private hGate m_Gate;
 
     [SerializeField]
     private int m_Id;
@@ -53,6 +55,7 @@ public class hEntrance : MonoBehaviour
 
     public void Open()
     {
+        m_Gate.Open();
         m_Collider.enabled = true;
         m_Light.enabled = true;
     }
@@ -64,11 +67,4 @@ public class hEntrance : MonoBehaviour
             enterEvent?.Invoke(this);
         }
     }
-
-    private void OnMouseDown()
-    {
-        enterEvent?.Invoke(this);
-    }
-
-
 }

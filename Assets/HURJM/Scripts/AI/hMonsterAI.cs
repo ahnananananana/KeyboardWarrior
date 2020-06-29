@@ -54,11 +54,6 @@ public abstract class hMonsterAI : MonoBehaviour
         m_Character.deadEvent += Dead;
     }
 
-    protected virtual void OnEnable()
-    {
-        //InitBTS();
-    }
-
     protected virtual void Update()
     {
         if(m_RootNode.children.Count == 0)

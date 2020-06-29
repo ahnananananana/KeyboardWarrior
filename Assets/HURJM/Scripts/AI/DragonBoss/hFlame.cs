@@ -36,5 +36,9 @@ public class hFlame : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other) => m_Contact?.Invoke(other);
+    private void OnTriggerStay(Collider other)
+    {
+       if (other.CompareTag("Player")) 
+            m_Contact?.Invoke(other);
+    }
 }

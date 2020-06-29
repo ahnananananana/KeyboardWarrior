@@ -2310,7 +2310,7 @@ MonoBehaviour:
   m_CurrHP: 100
   m_CurrMP: 0
   m_Attack:
-    m_BaseValue: 10
+    m_BaseValue: 30
   m_Defense:
     m_BaseValue: 0
   m_Magic:
@@ -2343,7 +2343,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   m_Agent: {fileID: 6883780445155618579}
+  target: {fileID: 0}
   m_launch: 1
+  m_Collider: {fileID: 0}
 --- !u!1 &7182390009613602110
 GameObject:
   m_ObjectHideFlags: 0
