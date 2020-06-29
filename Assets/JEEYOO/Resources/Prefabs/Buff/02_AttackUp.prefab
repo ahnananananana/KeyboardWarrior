@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 534128435572710712}
   - component: {fileID: 1511375425092398572}
   m_Layer: 0
-  m_Name: 00_AttackUp
+  m_Name: 02_AttackUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,3 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d28be97d18fb1a34791416c5a542b9d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 42c61ba2f6da20f4493a41a7ad17b03d, type: 3}

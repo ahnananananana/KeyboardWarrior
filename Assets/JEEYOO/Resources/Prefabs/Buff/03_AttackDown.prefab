@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8840257501097317049}
   - component: {fileID: 6580434433873374474}
   m_Layer: 0
-  m_Name: 01_AttackDown
+  m_Name: 03_AttackDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,3 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b09ef610d83fb4789782ade27009c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: d805351296a095d4e9294c4619de29a1, type: 3}
