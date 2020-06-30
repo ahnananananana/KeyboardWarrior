@@ -32,6 +32,13 @@ public class Character : MonoBehaviour
     public Experience m_EXP = new Experience();
     public float m_Damage;
 
+    private hAudioManager m_AudioManager;
+
+    private void Awake()
+    {
+        m_AudioManager = new hAudioManager(gameObject);
+    }
+
     protected virtual void Start()
     {
         
@@ -74,6 +81,7 @@ public class Character : MonoBehaviour
         }
     }
 
+    public hAudioManager audioManager => m_AudioManager;
 
     public void IncreaseStatByLvUp()
     {
