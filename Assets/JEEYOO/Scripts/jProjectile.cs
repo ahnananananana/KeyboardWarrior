@@ -5,22 +5,30 @@ using UnityEngine;
 public class jProjectile : MonoBehaviour
 {
     private Transform m_Transform;
-    private Transform playerTransform;
+    public Transform playerTransform;
+    private float temptime = 0;
+    private bool targetTrigger = true;
+    private Vector3 target;
+    private Vector3 targetVector;
+    private float projectileSpeed = 8f;
 
     // Start is called before the first frame update
     void Start()
     {
         m_Transform = this.gameObject.GetComponent<Transform>();
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+
+        target = playerTransform.position;
+        targetVector = target - m_Transform.position;
+        targetVector.Normalize();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float temptime = 0;
         temptime += Time.deltaTime;
-        //projectile.transform.position = this.gameObject.transform.position;
-        transform.position = Vector3.MoveTowards(m_Transform.position, playerTransform.position, 10f * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(m_Transform.position, target, 10f * Time.deltaTime);
+        transform.position += targetVector * Time.deltaTime * projectileSpeed;
         if (temptime >= 2.0f)
         {
             Destroy(this.gameObject);

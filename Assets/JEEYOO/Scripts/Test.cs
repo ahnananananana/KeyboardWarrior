@@ -28,10 +28,8 @@ public class Test : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            mainData.BuffData[0].ApplyBuff(player);
-            Debug.Log("eee");
-            Debug.Log("player exp ==" + player.m_EXP.m_CurrExp);
-            Debug.Log("player lev ==" + player.m_EXP.m_Level);
+            GameObject obj = GameObject.Instantiate(Resources.Load("Prefabs/StoneMonster")) as GameObject;
+            obj.transform.position = Vector3.zero;
         }
         if (Input.GetKeyDown(KeyCode.F1))
         {
