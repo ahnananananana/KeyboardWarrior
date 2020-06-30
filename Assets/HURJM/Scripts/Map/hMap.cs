@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class hMap : MonoBehaviour
 {
@@ -15,7 +16,16 @@ public class hMap : MonoBehaviour
     [SerializeField]
     private Transform m_SpawnPoints;
     private hSpawnPoint[] m_SpawnPointList;
+    private List<Character> m_SpawnMonsterList;
     private List<Character> m_MonsterList;
+    [SerializeField]
+    private Transform m_BossPos;
+    [SerializeField]
+    private Collider m_boundary;
+    [SerializeField]
+    private PlayableDirector m_PlayableDirector;
+    [SerializeField]
+    private Cinemachine.CinemachineVirtualCamera m_EndCam;
 
     public event DelEntrance enterEvent;
 
@@ -24,10 +34,12 @@ public class hMap : MonoBehaviour
     public int id { get => m_Id; }
     public MapType type { get => m_Type; set => m_Type = value; }
     public hEntrance[] entranceList { get => m_EntranceList; }
+    public Collider boundary { get => m_boundary; set => m_boundary = value; }
 
     private void Awake()
     {
         m_MonsterList = new List<Character>();
+        m_SpawnMonsterList = new List<Character>();
 
         for (int i = 0; i < m_EntranceList.Length; ++i)
         {
@@ -36,15 +48,25 @@ public class hMap : MonoBehaviour
 
         //m_LightList = m_Lights.GetComponentsInChildren<Light>();
         //SetType(m_Type);
-        SetType(hLevelManager.current.mapType);
+        SetType(hLevelManager.current.nextMapType);
 
         m_SpawnPointList = m_SpawnPoints.GetComponentsInChildren<hSpawnPoint>();
+        m_PlayableDirector.stopped += SwitchCamera;
     }
 
     public void StartMap()
     {
-        for (int i = 0; i < m_SpawnPointList.Length; ++i)
-            m_SpawnPointList[i].Spawn(1 * hLevelManager.current.curLevel, m_MonsterList);
+        if(type == MapType.BOSS)
+        {
+            Character monsterPrefab = m_SpawnMonsterList[0];
+            Character newMonster = Instantiate(monsterPrefab, m_BossPos.position, m_BossPos.rotation).GetComponent<Character>();
+            m_MonsterList.Add(newMonster);
+        }
+        else
+        {
+            for (int i = 0; i < m_SpawnPointList.Length; ++i)
+                m_SpawnPointList[i].Spawn(1 * hLevelManager.current.curLevel, m_MonsterList);
+        }
     }
 
     private void Update()
@@ -53,8 +75,13 @@ public class hMap : MonoBehaviour
             OpenTheDoor();
     }
 
+    private bool isOpen = false;
+
     private void OpenTheDoor()
     {
+        if (isOpen) return;
+        isOpen = true;
+        m_PlayableDirector.Play();
         for (int i = 0; i < m_EntranceList.Length; ++i)
             m_EntranceList[i].Open();
     }
@@ -96,8 +123,16 @@ public class hMap : MonoBehaviour
     public void SetSpawnMonster(Character[] inMonsterList)
     {
         for (int i = 0; i < inMonsterList.Length; ++i)
+        {
+            m_SpawnMonsterList.Add(inMonsterList[i]);
             for (int j = 0; j < m_SpawnPointList.Length; ++j)
                 m_SpawnPointList[j].AddSpawnMonster(inMonsterList[i]);
+        }
+    }
+
+    private void SwitchCamera(PlayableDirector inPlayableDirector)
+    {
+        m_EndCam.Priority = 11;
     }
 
     private void EnterEntrance(hEntrance inEntrance) => enterEvent?.Invoke(inEntrance);

@@ -32,10 +32,16 @@ public class Character : MonoBehaviour
     public Experience m_EXP = new Experience();
     public float m_Damage;
 
+    private hAudioManager m_AudioManager;
+
+    private void Awake()
+    {
+        m_AudioManager = new hAudioManager(gameObject);
+    }
 
     protected virtual void Start()
     {
-
+        
     }
 
     public float CurrHP////
@@ -75,6 +81,7 @@ public class Character : MonoBehaviour
         }
     }
 
+    public hAudioManager audioManager => m_AudioManager;
 
     public void IncreaseStatByLvUp()
     {
@@ -88,22 +95,20 @@ public class Character : MonoBehaviour
         m_AttackSpeed.IncreaseBaseValue(1.05f);
     }
 
-    public void DealDamage(Character defender, float inDamage = 0)
+    public void DealDamage(Character defender, float inDamage = 0f)
     {
-        if (inDamage > 0)
+        if(inDamage > 0)
             m_Damage = (Random.Range(0.95f, 1.05f) * inDamage - defender.m_Defense.m_CurrentValue);
         else
             m_Damage = (Random.Range(0.95f, 1.05f) * m_Attack.m_CurrentValue - defender.m_Defense.m_CurrentValue);
-
         if (m_Damage < 0)
             m_Damage = 0;
 
         defender.CurrHP -= m_Damage;
         if (defender.m_state != STATE.DEAD && defender.CurrHP <= 0)////
         {
-            if (defender.CompareTag("Monster"))
+            if(defender.CompareTag("Monster"))
                 m_EXP.GetExp((Monster)defender);
-
             defender.deadEvent?.Invoke();////
             defender.ChangeState(STATE.DEAD);
             defender.StateProcess();
@@ -123,11 +128,6 @@ public class Character : MonoBehaviour
             case STATE.ALIVE:
                 break;
             case STATE.DEAD:
-                if (this.tag == "Monster") // 죽었을 때 아웃라인 제거(대한)
-                {
-                    Monster DeadMonster = this.GetComponent<Monster>();
-                    DeadMonster.SetNullOutline();
-                }
                 break;
         }
     }

@@ -14,11 +14,25 @@ public enum MapType
 public class hMapManager : MonoBehaviour
 {
     [SerializeField]
+    private Cinemachine.CinemachineVirtualCamera m_VCamera;
+    [SerializeField]
     private hMapDatabase m_MapDatabase;
     [SerializeField]
     private hMap m_Map;
     [SerializeField]
     private Transform m_MapPos;
+
+    private hLevelData m_CurLevelData;
+    private Buff m_Buff;
+    [SerializeField]
+    private Transform m_PlayerPos, m_BasicPlayerPos, m_PlayerBossPos;
+    private Player m_Player;
+    [SerializeField]
+    private Player m_PlayerPrefab;
+    [SerializeField]
+    private hPlayerUI m_PlayerUI;
+
+    public hLevelData curLevelData { get => m_CurLevelData; set => m_CurLevelData = value; }
 
     private void Awake()
     {
@@ -45,18 +59,52 @@ public class hMapManager : MonoBehaviour
 
         for (int i = 0; i < m_Map.entranceList.Length; ++i)
         {
-            if(levelData.isBoss)
+            /*if(levelData.isBoss)
             {
                 m_Map.entranceList[i].SetType(MapType.BOSS);
             }
             else
-            {
-                MapType type = (MapType)Random.Range(0, (int)MapType.BOSS);
-                m_Map.entranceList[i].SetType(type);
-            }
+            {*/
+            //MapType type = (MapType)Random.Range(0, (int)MapType.BOSS + 1);
+            MapType type = MapType.BOSS;
+            m_Map.entranceList[i].SetType(type);
+            //}
         }
             
         m_Map.SetSpawnMonster(levelData.monsterList);
+
+        if(levelData.buffList.Length > 0)
+        {
+            int index = Random.Range(0, levelData.buffList.Length);
+            m_Buff = levelData.buffList[index];
+        }
+
+        if (m_Player == null) m_Player = FindObjectOfType<Player>();
+        if(m_Player == null)
+        {
+            m_Player = Instantiate(m_PlayerPrefab);
+            m_Player.gameObject.name = "Player";
+            DontDestroyOnLoad(m_Player);
+        }
+
+        if(m_Buff != null)
+        {
+            m_Buff.ApplyBuff(m_Player);
+            Debug.Log(m_Buff.gameObject.name);
+        }
+        m_Player.AttachUI(m_PlayerUI);
+
+        m_PlayerPos = m_BasicPlayerPos;
+        if (levelData.isBoss) m_PlayerPos = m_PlayerBossPos;
+
+        m_Player.transform.position = m_PlayerPos.position;
+        m_PlayerPos.SetParent(m_Player.transform);
+        m_PlayerPos.localPosition = Vector3.zero;
+
+        m_VCamera.Follow = m_PlayerPos;
+        m_VCamera.LookAt = m_PlayerPos;
+
+        m_CurLevelData = levelData;
 
         m_Map.StartMap();
     }
@@ -65,7 +113,8 @@ public class hMapManager : MonoBehaviour
     {
         Debug.Log("enter entrance " + inEntrance.id + " " + inEntrance.nextMapType);
         hLevelManager.current.curLevel++;
-        hLevelManager.current.mapType = inEntrance.nextMapType;
+        hLevelManager.current.nextMapType = inEntrance.nextMapType;
+        Destroy(m_PlayerPos);
         SceneLoad.I.SceneChange(2);
         //해당 출입구 id를 가지고 다음 맵을 선택
         //먼저 로딩씬으로 전환 후 다음 맵 로딩 후 전환

@@ -22,9 +22,20 @@ public abstract class hMonsterAI : MonoBehaviour
     [SerializeField]
     protected NavMeshAgent m_Agent;
 
-    protected Character m_Target;
+    [SerializeField]
+    private Character target;
+    protected Character m_Target
+    {
+        get
+        {
+            if (target == null) target = FindObjectOfType<Player>();
+            return target;
+        }
+        set => target = value;
+    }
     protected Vector3 m_Des;
     public bool m_launch;
+    [SerializeField]
     protected Collider m_Collider;
     public float attackRange { get => m_AttackRange; set => m_AttackRange = value; }
     public Transform root { get => m_Root; set => m_Root = value; }
@@ -35,15 +46,18 @@ public abstract class hMonsterAI : MonoBehaviour
     public bool launch { get => m_launch; set => m_launch = value; }
     public Collider myCollider { get => m_Collider; set => m_Collider = value; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_RootNode = new hSelectorNode();
-        m_Collider = GetComponent<Collider>();
+        if(m_Collider == null)
+            m_Collider = GetComponent<Collider>();
         m_Character.deadEvent += Dead;
-        InitBTS();
     }
-    private void Update()
+
+    protected virtual void Update()
     {
+        if(m_RootNode.children.Count == 0)
+            InitBTS();
         if (m_launch)
             m_RootNode.Evaluate();
     }

@@ -2,35 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate bool DelBool();
+
 public class hDecorationNode : hBTSNode
 {
-    public delegate bool DelDecoration();
-
     private hBTSNode m_Child;
 
-    private DelDecoration m_Decoration;
+    private DelBool m_Condition;
     private bool m_IsWatch;
 
     public hBTSNode child { set => m_Child = value; }
+    public DelBool condition { get => m_Condition; set => m_Condition = value; }
 
-    public hDecorationNode(hBTSNode inChild, DelDecoration inDel, bool inIsWatch = true)
+    public hDecorationNode(bool inIsWatch = true) => m_IsWatch = inIsWatch;
+
+    public hDecorationNode(hBTSNode inChild, DelBool inDel, bool inIsWatch = true)
     {
         m_Child = inChild;
-        m_Decoration = inDel;
+        m_Condition = inDel;
     }
 
-    public hDecorationNode(DelDecoration inDel, bool inIsWatch = true)
+    public hDecorationNode(DelBool inDel, bool inIsWatch = true)
     {
-        m_Decoration = inDel;
+        m_Condition = inDel;
         m_IsWatch = inIsWatch;
     }
 
-
     public override NodeState Evaluate()
     {
-        bool condition = m_Decoration();
-        if (!m_IsWatch && m_State == NodeState.RUNNING)
-            condition = true;
+        bool condition = true;
+        if(m_IsWatch || m_State != NodeState.RUNNING)
+            condition = m_Condition();
 
         if (condition)
         {

@@ -17,7 +17,7 @@ public class hSearchAndFollowAction : hAiAction
     private float m_StopDistance;
     private bool m_IsTargetMoved;
 
-    public hSearchAndFollowAction(hMonsterAI inMonster, Transform inTarget, Transform inLookAt = null, float inStopDistance = .1f)
+    public hSearchAndFollowAction(hMonsterAI inMonster, Transform inTarget, ref float inStopDistance, Transform inLookAt = null)
     {
         m_Monster = inMonster;
         m_Target = inTarget;

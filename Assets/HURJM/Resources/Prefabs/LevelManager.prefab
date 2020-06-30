@@ -46,3 +46,4 @@ MonoBehaviour:
   m_LevelDataList:
   - {fileID: 11400000, guid: 539ad6b268f7b1a47873e23965dea9a2, type: 2}
   m_CurLevel: 1
+  mapType: 0

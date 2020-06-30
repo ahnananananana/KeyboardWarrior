@@ -11,6 +11,7 @@ public class hMoveAction : hAiAction
     private Transform m_Destination;
     private Transform m_LookAt;
     private float m_StopDistance;
+    private float m_Speed;
 
     public hMoveAction(hMonsterAI inMonster, Transform inDestination, Transform inLookAt = null, float inStopDistance = .1f)
     {
@@ -23,6 +24,7 @@ public class hMoveAction : hAiAction
         m_Destination = inDestination;
         m_StopDistance = inStopDistance;
         m_LookAt = inLookAt;
+        m_Speed = m_Agent.speed;
     }
 
     protected override NodeState Execute()
@@ -45,6 +47,8 @@ public class hMoveAction : hAiAction
             m_Animator.SetFloat(m_DirectionHash, Vector3.Dot(moveDirection, lookDirection));
             return NodeState.SUCCESS;
         }
+
+        m_Agent.speed = m_Speed;
 
         float verticalSpeed = Mathf.Abs(m_Agent.velocity.z);
         float horizontalSpeed = Mathf.Abs(m_Agent.velocity.x);

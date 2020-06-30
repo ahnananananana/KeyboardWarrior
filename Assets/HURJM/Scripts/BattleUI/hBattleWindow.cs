@@ -9,16 +9,12 @@ public class hBattleWindow : MonoBehaviour
     private hStatBar m_HealthBar, m_ManaBar, m_ExpBar;
     [SerializeField]
     private hStatusContainer m_StatusContainer;
-    [SerializeField]
-    private Canvas m_Canvas;
 
     public void Init(Character inPlayer)
     {
         m_Player = inPlayer;
         RefreshUI();
     }
-
-    public void SetActive(bool inSet) => m_Canvas.enabled = inSet;
 
     public void RefreshUI()
     {
