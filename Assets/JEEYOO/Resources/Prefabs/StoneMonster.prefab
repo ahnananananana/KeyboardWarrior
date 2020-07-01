@@ -170,7 +170,7 @@ Animator:
   m_GameObject: {fileID: 415018682885852873}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1db38da97b6ad094dbca967f13dd370f, type: 3}
-  m_Controller: {fileID: 9100000, guid: ce722baed85c67842b1b6223c5a3d641, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5dda75d3e1b7eb9438c6da8b66f4f3a7, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_CurrHP: 0
   m_CurrMP: 0
   m_Attack:
-    m_BaseValue: 0
+    m_BaseValue: 30
   m_Defense:
     m_BaseValue: 0
   m_Magic:
@@ -213,7 +213,10 @@ MonoBehaviour:
   m_AttackSpeed:
     m_BaseValue: 0
   m_Damage: 0
-  renderers: []
+  m_AudioManager:
+    m_MixerGroup: {fileID: 6970856453428413136, guid: c59befaff80fab24c9c3f292378a3c78,
+      type: 2}
+    m_PitchWidth: 15
   m_State: 0
 --- !u!195 &415018683623456037
 NavMeshAgent:

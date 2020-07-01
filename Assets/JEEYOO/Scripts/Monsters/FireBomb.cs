@@ -9,7 +9,7 @@ public class FireBomb : Monster
 {
     public enum STATE
     {
-        IDLE, TRACE, ATTACK, DEAD,
+        IDLE, TRACE, ATTACK, DEAD, DAMAGED,
     }
 
     public STATE m_State = STATE.IDLE;
@@ -29,7 +29,7 @@ public class FireBomb : Monster
 
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         InitStat();
         m_Transform = this.gameObject.GetComponent<Transform>();
@@ -70,6 +70,10 @@ public class FireBomb : Monster
             {
                 m_State = STATE.TRACE;
             }
+            else if(CurrHP <= 0)
+            {
+                m_State = STATE.DEAD;
+            }
             else
             {
                 m_State = STATE.IDLE;
@@ -97,7 +101,11 @@ public class FireBomb : Monster
                     transform.LookAt(playerTransform);
                     m_Animator.SetBool("isAttack", true);
                     break;
+                case STATE.DAMAGED:
+                    m_Animator.SetBool("isDamaged", true);
+                    break;
                 case STATE.DEAD:
+                    m_Animator.SetBool("isDead", true);
                     break;
             }
             yield return null;
