@@ -19,6 +19,11 @@ public class Player : Character
 
         deadEvent += Dead;
     }
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("파이클");
+    }
+
 
     public void AttachUI(hPlayerUI inUI)
     {
