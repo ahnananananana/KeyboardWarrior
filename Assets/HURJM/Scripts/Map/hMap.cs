@@ -23,8 +23,6 @@ public class hMap : MonoBehaviour
     [SerializeField]
     private Collider m_boundary;
     [SerializeField]
-    private PlayableDirector m_PlayableDirector;
-    [SerializeField]
     private Cinemachine.CinemachineVirtualCamera m_EndCam;
 
     public event DelEntrance enterEvent;
@@ -51,7 +49,6 @@ public class hMap : MonoBehaviour
         SetType(hLevelManager.current.nextMapType);
 
         m_SpawnPointList = m_SpawnPoints.GetComponentsInChildren<hSpawnPoint>();
-        m_PlayableDirector.stopped += SwitchCamera;
     }
 
     public void StartMap()
@@ -81,7 +78,7 @@ public class hMap : MonoBehaviour
     {
         if (isOpen) return;
         isOpen = true;
-        m_PlayableDirector.Play();
+        m_EndCam.Priority = 11;
         for (int i = 0; i < m_EntranceList.Length; ++i)
             m_EntranceList[i].Open();
     }
@@ -128,11 +125,6 @@ public class hMap : MonoBehaviour
             for (int j = 0; j < m_SpawnPointList.Length; ++j)
                 m_SpawnPointList[j].AddSpawnMonster(inMonsterList[i]);
         }
-    }
-
-    private void SwitchCamera(PlayableDirector inPlayableDirector)
-    {
-        m_EndCam.Priority = 11;
     }
 
     private void EnterEntrance(hEntrance inEntrance) => enterEvent?.Invoke(inEntrance);

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void DelT<T>(T inItem);
-
 public class hFlameBomb : MonoBehaviour
 {
     [SerializeField]
