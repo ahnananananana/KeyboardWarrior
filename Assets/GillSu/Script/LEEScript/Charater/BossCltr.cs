@@ -24,7 +24,7 @@ public class BossCltr : Monster
     public Transform PlayerTr;
     [SerializeField]
     private GameObject m_SkillRange;
-
+    
     [SerializeField]
     private Transform Bosstr;
     public Animator Bossanim = null;
@@ -172,8 +172,15 @@ public class BossCltr : Monster
         }*/
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("파이클");
+    }
+
+
     void NomalAttack()
     {
+        DealDamage(PlayerTr.GetComponent<Character>(), 2f);
         m_Count += 1;
         if (m_Count == 2)
         {

@@ -85,6 +85,12 @@ public class CharCtrl : MonoBehaviour
         StateProcess();
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("파이클");
+    }
+
+
     protected virtual void StateProcess()
     {
         switch (state)
