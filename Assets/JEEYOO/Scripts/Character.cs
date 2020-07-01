@@ -35,7 +35,7 @@ public class Character : MonoBehaviour
     [SerializeField]
     protected hAudioManager m_AudioManager;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_AudioManager = new hAudioManager(gameObject);
     }

@@ -11,8 +11,9 @@ public class Player : Character
     [SerializeField]
     private Animator m_Animator;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InitStats();
         m_EXP = new Experience();
 
