@@ -56,8 +56,8 @@ public class Player : Character
         m_Magic.m_BaseValue = 80;
         m_Resistance.m_BaseValue = 20;
 
-        m_MoveSpeed.m_BaseValue = 20;
-        m_AttackSpeed.m_BaseValue = 20;
+        m_MoveSpeed.m_BaseValue = 5;
+        m_AttackSpeed.m_BaseValue = 1;
     }
 
     private void Dead()
