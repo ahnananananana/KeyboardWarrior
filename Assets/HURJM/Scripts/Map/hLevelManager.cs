@@ -16,7 +16,7 @@ public class hLevelManager : MonoBehaviour
             if (_Instance == null) _Instance = FindObjectOfType<hLevelManager>();
             if (_Instance == null)
             {
-                GameObject gob = Resources.Load(prefabPath) as GameObject;
+                GameObject gob = Instantiate(Resources.Load(prefabPath)) as GameObject;
                 gob.name = "LevelManager";
                 _Instance = gob.GetComponent<hLevelManager>();
                 DontDestroyOnLoad(gob);
@@ -38,6 +38,8 @@ public class hLevelManager : MonoBehaviour
     public int curLevel { get => m_CurLevel; set => m_CurLevel = value; }
     public MapType nextMapType { get => m_NextMapType; set => m_NextMapType = value; }
 
+    public hCustomList<Buff> buffList;
+
     private void Awake()
     {
         if(_Instance == null)
@@ -50,6 +52,8 @@ public class hLevelManager : MonoBehaviour
             DestroyImmediate(gameObject);
             return;
         }
+
+        buffList = new hCustomList<Buff>();
     }
 
     public hLevelData LoadNextLevel()

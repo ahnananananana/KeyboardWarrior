@@ -70,7 +70,10 @@ public class CharCtrl : MonoBehaviour
     public Projectile proj;
 
     public Character character;
-
+    private void Awake()
+    {
+        UsingWeaponTR = BowTR;
+    }
     private void Start()
     {
         UsingAni = GetComponent<Animator>();

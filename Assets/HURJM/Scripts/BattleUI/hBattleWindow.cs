@@ -23,8 +23,7 @@ public class hBattleWindow : MonoBehaviour
         m_ManaBar.SetMax(m_Player.m_MaxMP.m_CurrentValue);
         m_ManaBar.SetValue(m_Player.m_CurrMP);
 
-        //m_ExpBar.SetMax();//현재 경험치 테이블이 필요
+        m_ExpBar.SetMax(m_Player.m_EXP.m_BaseExp);//현재 경험치 테이블이 필요
         m_ExpBar.SetValue(m_Player.m_EXP.m_CurrExp);
     }
-
 }

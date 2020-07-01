@@ -43,7 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb59855a1640c2d46b75e0afc8a32624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LevelDataList:
+  m_NormalLevelDataList:
   - {fileID: 11400000, guid: 539ad6b268f7b1a47873e23965dea9a2, type: 2}
+  m_BossLevelDataList:
+  - {fileID: 11400000, guid: 18995b2585dc1e9448e622912269b4ab, type: 2}
   m_CurLevel: 1
-  mapType: 0
