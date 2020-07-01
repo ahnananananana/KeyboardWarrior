@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3cab52bd39b9a5f4fb028f9ae0ecbc91
-timeCreated: 1506572261
+guid: 1db38da97b6ad094dbca967f13dd370f
+timeCreated: 1506571777
 licenseType: Store
 ModelImporter:
   serializedVersion: 19
@@ -12,8 +12,8 @@ ModelImporter:
     100008: Bone005
     100010: Bone006
     100012: Bone007
-    100014: StoneMonster
-    100016: //RootNode
+    100014: //RootNode
+    100016: StoneMonster
     400000: Bone001
     400002: Bone002
     400004: Bone003
@@ -21,12 +21,10 @@ ModelImporter:
     400008: Bone005
     400010: Bone006
     400012: Bone007
-    400014: StoneMonster
-    400016: //RootNode
+    400014: //RootNode
+    400016: StoneMonster
     4300000: StoneMonster
-    7400000: Anim_Attack
     9500000: //RootNode
-    11100000: //RootNode
     13700000: StoneMonster
   materials:
     importMaterials: 1
@@ -89,10 +87,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

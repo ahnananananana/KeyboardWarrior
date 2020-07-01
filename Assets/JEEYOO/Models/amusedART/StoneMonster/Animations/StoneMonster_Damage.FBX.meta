@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3cab52bd39b9a5f4fb028f9ae0ecbc91
+guid: 8af2259933ccf2e47b0a9493f3516fc4
 timeCreated: 1506572261
 licenseType: Store
 ModelImporter:
@@ -24,7 +24,7 @@ ModelImporter:
     400014: StoneMonster
     400016: //RootNode
     4300000: StoneMonster
-    7400000: Anim_Attack
+    7400000: Anim_Damage
     9500000: //RootNode
     11100000: //RootNode
     13700000: StoneMonster
