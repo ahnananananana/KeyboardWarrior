@@ -16,6 +16,7 @@ MonoBehaviour:
   m_IsBoss: 0
   m_MonsterList:
   - {fileID: 1896776672180440189, guid: 2ef891e3881d1bf46822768745744e32, type: 3}
+  - {fileID: 415018683623456038, guid: b8e23870f098a1649890554cf05ae7e3, type: 3}
   m_BuffList:
   - {fileID: 4417460897168021009, guid: 3efd35f8ead1f524aac313f3c42c93e1, type: 3}
   - {fileID: 7010145560685590216, guid: 35c14f6662d0ae74c895c51c4316b73c, type: 3}

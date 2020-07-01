@@ -17,11 +17,15 @@ public class hAudioManager
 
     public int poolSize { get => m_PoolSize; set => m_PoolSize = value; }
 
-    public hAudioManager(GameObject inPlayer)
+    public hAudioManager()
     {
-        m_Player = inPlayer;
         m_AudioSourcePool = new List<AudioSource>();
         m_PoolSize = 1;
+    }
+
+    public void Init(GameObject inPlayer)
+    {
+        m_Player = inPlayer;
 
         for (int i = 0; i < m_PoolSize; ++i)
             AddNewSource();
@@ -61,12 +65,11 @@ public class hAudioManager
         }
 
         source.enabled = true;
-        float min = 1f - m_PitchWidth;
-        float max = 1f + m_PitchWidth;
+        float min = 1f - .01f * m_PitchWidth;
+        float max = 1f + .01f * m_PitchWidth;
         source.pitch *= Random.Range(min, max);
         source.clip = inClip;
         source.loop = inIsLoop;
-        source.spatialBlend = 1f;
         source.Play();
         return source;
     }

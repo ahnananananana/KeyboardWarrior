@@ -6,10 +6,10 @@ public class Character : MonoBehaviour
 {
     public enum STATE
     {
-        CREATE, ALIVE, DEAD,
+        CREATE, IDLE, TRACE, ATTACK, DAMAGED, ALIVE, DEAD,
     }
 
-    public event DelVoid changeEvent;////
+    public event DelVoid changeEvent;
     public event DelVoid deadEvent;
 
     public STATE m_state = STATE.ALIVE;
@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_AudioManager = new hAudioManager(gameObject);
+        m_AudioManager.Init(gameObject);
     }
 
     protected virtual void Start()

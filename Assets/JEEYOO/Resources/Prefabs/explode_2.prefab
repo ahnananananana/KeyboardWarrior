@@ -46,7 +46,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 144344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb2cbbfcf0c091547bda8c1bba1601d4, type: 3}
+  m_Script: {fileID: 11500000, guid: bc19afabd82d708468f5eb91eebbc7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
@@ -54,7 +54,7 @@ MonoBehaviour:
   audiomanager:
     m_MixerGroup: {fileID: 6970856453428413136, guid: c59befaff80fab24c9c3f292378a3c78,
       type: 2}
-    m_PitchWidth: 0
+    m_PitchWidth: 15
   audio: {fileID: 8300000, guid: 3f5c01dd1e7789f45bff62bb48e39b4b, type: 3}
 --- !u!198 &19835186
 ParticleSystem:
@@ -4874,10 +4874,10 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0

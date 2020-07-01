@@ -26,6 +26,7 @@ public class hMap : MonoBehaviour
     private Cinemachine.CinemachineVirtualCamera m_EndCam;
 
     public event DelEntrance enterEvent;
+    public event DelVoid clearEvent;
 
     [SerializeField]
     private int m_Id;
@@ -81,6 +82,7 @@ public class hMap : MonoBehaviour
         m_EndCam.Priority = 11;
         for (int i = 0; i < m_EntranceList.Length; ++i)
             m_EntranceList[i].Open();
+        clearEvent?.Invoke();
     }
 
     private bool IsEnd()

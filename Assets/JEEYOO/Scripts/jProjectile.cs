@@ -19,7 +19,7 @@ public class jProjectile : MonoBehaviour
     {
         m_Transform = this.gameObject.GetComponent<Transform>();
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        audiomanager = new hAudioManager(gameObject);
+        audiomanager.Init(gameObject);
         
 
         target = playerTransform.position;
@@ -45,6 +45,7 @@ public class jProjectile : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Character scp = other.gameObject.GetComponent<Player>();
+            Debug.Log(firebomb.m_Attack.m_CurrentValue);
             firebomb.DealDamage(other.gameObject.GetComponent<Player>());
             audiomanager.PlayClip(audio);
             Destroy(this.gameObject);

@@ -7,13 +7,6 @@ using UnityEngine.AI;
 
 public class FireBomb : Monster
 {
-    public enum STATE
-    {
-        IDLE, TRACE, ATTACK, DEAD, DAMAGED,
-    }
-
-    public STATE m_State = STATE.IDLE;
-
     private Transform m_Transform;
     private Transform playerTransform;
     private NavMeshAgent m_NVAgent;
@@ -37,22 +30,10 @@ public class FireBomb : Monster
         m_NVAgent = this.gameObject.GetComponent<NavMeshAgent>();
         m_Animator = this.gameObject.GetComponent<Animator>();
 
-        
-
         m_NVAgent.destination = playerTransform.position;
 
         StartCoroutine(this.CheckState());
         StartCoroutine(this.CheckStateForAction());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            FireProjectile();
-        }
     }
 
     IEnumerator CheckState()
@@ -64,19 +45,19 @@ public class FireBomb : Monster
 
             if (dist <= m_AttackDist)
             {
-                m_State = STATE.ATTACK;
+                m_state = STATE.ATTACK;
             }
             else if (dist <= m_TraceDist)
             {
-                m_State = STATE.TRACE;
+                m_state = STATE.TRACE;
             }
             else if(CurrHP <= 0)
             {
-                m_State = STATE.DEAD;
+                m_state = STATE.DEAD;
             }
             else
             {
-                m_State = STATE.IDLE;
+                m_state = STATE.IDLE;
             }
         }
     }
@@ -85,7 +66,7 @@ public class FireBomb : Monster
     {
         while (!isDead)
         {
-            switch(m_State)
+            switch(m_state)
             {
                 case STATE.IDLE:
                     m_NVAgent.Stop();
@@ -105,7 +86,9 @@ public class FireBomb : Monster
                     m_Animator.SetBool("isDamaged", true);
                     break;
                 case STATE.DEAD:
-                    m_Animator.SetBool("isDead", true);
+                    m_Animator.SetTrigger("isDead");
+                    isDead = true;
+                    GetComponent<Collider>().enabled = false;
                     break;
             }
             yield return null;
@@ -116,6 +99,7 @@ public class FireBomb : Monster
     {
         m_MaxHP.m_BaseValue = 100;
         m_MaxMP.m_BaseValue = 0;
+        m_CurrHP = 100;
 
         m_Attack.m_BaseValue = 50;
         m_Defense.m_BaseValue = 20;

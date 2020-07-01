@@ -3,22 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class hBuffPopup : MonoBehaviour
+public class hClearPopup : MonoBehaviour
 {
-    [SerializeField]
-    private Image m_Image;
     [SerializeField]
     private TMPro.TMP_Text m_Text;
 
-    private void OnEnable()
+    public void Set(int inLevel)
     {
+        m_Text.text = inLevel + " 스테이지 클리어";
         StartCoroutine(DelayEnd());
-    }
-
-    public void Set(Buff inBuff)
-    {
-        m_Image.sprite = inBuff.icon;
-        m_Text.text = inBuff.buffName;
     }
 
     private IEnumerator DelayEnd()

@@ -32,6 +32,8 @@ public class hMapManager : MonoBehaviour
     private Player m_PlayerPrefab;
     [SerializeField]
     private hPlayerUI m_PlayerUI;
+    [SerializeField]
+    private hClearPopup m_ClearPopup;
 
     public hLevelData curLevelData { get => m_CurLevelData; set => m_CurLevelData = value; }
 
@@ -54,6 +56,8 @@ public class hMapManager : MonoBehaviour
             DontDestroyOnLoad(m_Player);
         }
         m_Player.AttachUI(m_PlayerUI);
+        m_ClearPopup.gameObject.SetActive(false);
+        m_Map.clearEvent += SetClearPopup;
     }
 
     private void Start()
@@ -117,12 +121,9 @@ public class hMapManager : MonoBehaviour
         //levelmanager에게 해당 leveldata 요청
     }
 
-
-    private void Update()
+    public void SetClearPopup()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            m_Map.SetType((MapType)(((int)m_Map.type + 1) % (int)MapType.count));
-        }
+        m_ClearPopup.gameObject.SetActive(true);
+        m_ClearPopup.Set(hLevelManager.current.curLevel);
     }
 }

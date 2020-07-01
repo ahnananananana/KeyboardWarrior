@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415018682885362401}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415018682885362403}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415018682885362405}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415018682885362407}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,9 +137,10 @@ GameObject:
   - component: {fileID: 415018682878442759}
   - component: {fileID: 415018683623456038}
   - component: {fileID: 415018683623456037}
-  m_Layer: 0
+  - component: {fileID: -3865765990934306843}
+  m_Layer: 11
   m_Name: StoneMonster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -188,7 +189,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 415018682885852873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 738c1bea540a8ab49bf280474490a066, type: 3}
+  m_Script: {fileID: 11500000, guid: 68f8108032bac454ea155eac68ec8077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_state: 1
@@ -201,7 +202,7 @@ MonoBehaviour:
   m_CurrHP: 0
   m_CurrMP: 0
   m_Attack:
-    m_BaseValue: 30
+    m_BaseValue: 0
   m_Defense:
     m_BaseValue: 0
   m_Magic:
@@ -240,6 +241,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &-3865765990934306843
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415018682885852873}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.867286, z: 1}
+  m_Center: {x: 0, y: 0.43364298, z: 0}
 --- !u!1 &415018682885852875
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415018682885362411}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +293,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415018682885362413}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 415018682885362415}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415018682885362423}
   - component: {fileID: 415018682882671559}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StoneMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}

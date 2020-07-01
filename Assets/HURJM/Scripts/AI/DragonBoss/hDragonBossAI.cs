@@ -46,6 +46,7 @@ public class hDragonBossAI : hMonsterAI
     private PlayableDirector m_Intro;
     [SerializeField]
     private float m_EncounterDis;
+    private GameObject m_PlayerUI;
 
     protected override void Awake()
     {
@@ -72,6 +73,11 @@ public class hDragonBossAI : hMonsterAI
                 break;
             }
         }
+
+        m_PlayerUI = FindObjectOfType<hPlayerUI>().gameObject;
+        m_Intro.played += (PlayableDirector i) => { m_PlayerUI.SetActive(false); };
+        m_Intro.stopped += (PlayableDirector i) => { m_PlayerUI.SetActive(true); };
+
         m_Map = FindObjectOfType<hMap>();
         m_Boundary = m_Map.boundary as BoxCollider;
     }
