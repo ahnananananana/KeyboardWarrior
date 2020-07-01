@@ -14,6 +14,11 @@ public class HandAtk : MonoBehaviour
     public float fDeleteTime = 0.1f;
     public GameObject Obj_CrashEffect;
     public GameObject CrashMonster;
+    Vector3 EffectPos;
+
+    Character m_character;////
+
+    public Character character { get => m_character; set => m_character = value; }
 
     private void Update()
     {
@@ -63,12 +68,13 @@ public class HandAtk : MonoBehaviour
     void CrashEffect()
     {
         GameObject obj = Instantiate(Obj_CrashEffect);
-        obj.transform.position = CrashMonster.transform.position;
+        obj.transform.position = EffectPos;
         obj.transform.rotation = this.transform.rotation;
     }
 
     void Damage()
     {
+        character.DealDamage(CrashMonster.GetComponent<Character>());
         Debug.Log("타격");
     }
 
@@ -94,6 +100,8 @@ public class HandAtk : MonoBehaviour
         if (obj.tag == "Monster")
         {
             CrashMonster = obj.gameObject;
+            EffectPos = CrashMonster.transform.position;
+            EffectPos.y += 1f;
             ChangeState(STATE.CRASH);
         }
     }

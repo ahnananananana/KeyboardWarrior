@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   Obj_CrashEffect: {fileID: 199484, guid: bf27844d805522447933dc21e304c99b, type: 3}
-  Obj_GunFireEffect: {fileID: 100006, guid: e6053c5709085d44ea8264ed610da2c1, type: 3}
+  Obj_GunFireEffect: {fileID: 0}
   CrashMonster: {fileID: 0}
   Monster:
     serializedVersion: 2
