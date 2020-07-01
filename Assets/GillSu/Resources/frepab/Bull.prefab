@@ -555,7 +555,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1299823453280158604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80dce1f131ef31042b254095b44d6385, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b2349f25e3cb7142a351bcd1fade250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_state: 1
@@ -579,8 +579,11 @@ MonoBehaviour:
     m_BaseValue: 0
   m_AttackSpeed:
     m_BaseValue: 0
-  m_EXP: {fileID: 0}
   m_Damage: 0
+  m_AudioManager:
+    m_MixerGroup: {fileID: 6970856453428413136, guid: c59befaff80fab24c9c3f292378a3c78,
+      type: 2}
+    m_PitchWidth: 15
   m_HPBar: {fileID: 0}
   HPBarPos: {fileID: 0}
   m_State: 0
