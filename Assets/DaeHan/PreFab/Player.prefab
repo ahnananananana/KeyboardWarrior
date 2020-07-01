@@ -389,6 +389,10 @@ MonoBehaviour:
   m_AttackSpeed:
     m_BaseValue: 1
   m_Damage: 0
+  m_AudioManager:
+    m_MixerGroup: {fileID: 6970856453428413136, guid: c59befaff80fab24c9c3f292378a3c78,
+      type: 2}
+    m_PitchWidth: 15
   m_UI: {fileID: 0}
   m_Animator: {fileID: 3388992458487267891}
 --- !u!114 &9063993175724028743
