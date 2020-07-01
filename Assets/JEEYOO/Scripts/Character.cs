@@ -32,7 +32,8 @@ public class Character : MonoBehaviour
     public Experience m_EXP = new Experience();
     public float m_Damage;
 
-    private hAudioManager m_AudioManager;
+    [SerializeField]
+    protected hAudioManager m_AudioManager;
 
     private void Awake()
     {
@@ -145,4 +146,7 @@ public class Character : MonoBehaviour
                 break;
         }
     }
+
+    public void PlaySound(AudioClip inClip) => m_AudioManager.PlayClip(inClip);
+    public void StopSound(AudioClip inClip) => m_AudioManager.StopClip(inClip);
 }

@@ -24,8 +24,9 @@ public class hMapManager : MonoBehaviour
 
     private hLevelData m_CurLevelData;
     private Buff m_Buff;
+    private Transform m_PlayerPos;
     [SerializeField]
-    private Transform m_PlayerPos, m_BasicPlayerPos, m_PlayerBossPos;
+    private Transform m_BasicPlayerPos, m_PlayerBossPos;
     private Player m_Player;
     [SerializeField]
     private Player m_PlayerPrefab;
@@ -45,6 +46,14 @@ public class hMapManager : MonoBehaviour
 
         m_Map.enterEvent += EnterEntrance;
 
+        if (m_Player == null) m_Player = FindObjectOfType<Player>();
+        if (m_Player == null)
+        {
+            m_Player = Instantiate(m_PlayerPrefab);
+            m_Player.gameObject.name = "Player";
+            DontDestroyOnLoad(m_Player);
+        }
+        m_Player.AttachUI(m_PlayerUI);
     }
 
     private void Start()
@@ -59,16 +68,9 @@ public class hMapManager : MonoBehaviour
 
         for (int i = 0; i < m_Map.entranceList.Length; ++i)
         {
-            /*if(levelData.isBoss)
-            {
-                m_Map.entranceList[i].SetType(MapType.BOSS);
-            }
-            else
-            {*/
-            //MapType type = (MapType)Random.Range(0, (int)MapType.BOSS + 1);
-            MapType type = MapType.BOSS;
+            MapType type = (MapType)Random.Range(0, (int)MapType.BOSS + 1);
+            // MapType type = MapType.BOSS;
             m_Map.entranceList[i].SetType(type);
-            //}
         }
             
         m_Map.SetSpawnMonster(levelData.monsterList);
@@ -79,20 +81,14 @@ public class hMapManager : MonoBehaviour
             m_Buff = levelData.buffList[index];
         }
 
-        if (m_Player == null) m_Player = FindObjectOfType<Player>();
-        if(m_Player == null)
-        {
-            m_Player = Instantiate(m_PlayerPrefab);
-            m_Player.gameObject.name = "Player";
-            DontDestroyOnLoad(m_Player);
-        }
-
         if(m_Buff != null)
         {
             m_Buff.ApplyBuff(m_Player);
-            Debug.Log(m_Buff.gameObject.name);
+            m_PlayerUI.SetBuffPopup(m_Buff);
+            /*m_BuffPopup.gameObject.SetActive(true);
+            m_BuffPopup.Set(m_Buff);
+            hLevelManager.current.buffList.Add(m_Buff);*/
         }
-        m_Player.AttachUI(m_PlayerUI);
 
         m_PlayerPos = m_BasicPlayerPos;
         if (levelData.isBoss) m_PlayerPos = m_PlayerBossPos;

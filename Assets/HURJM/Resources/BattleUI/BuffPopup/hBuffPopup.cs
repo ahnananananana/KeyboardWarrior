@@ -13,6 +13,13 @@ public class hBuffPopup : MonoBehaviour
     public void Set(Buff inBuff)
     {
         m_Image.sprite = inBuff.icon;
-        //m_Text.text = inBuff.
+        m_Text.text = inBuff.buffName;
+        StartCoroutine(DelayEnd());
+    }
+
+    private IEnumerator DelayEnd()
+    {
+        yield return new WaitForSeconds(3f);
+        gameObject.SetActive(false);
     }
 }

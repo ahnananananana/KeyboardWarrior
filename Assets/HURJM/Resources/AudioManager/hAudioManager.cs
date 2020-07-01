@@ -1,21 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
+[System.Serializable]
 public class hAudioManager
 {
     private List<AudioSource> m_AudioSourcePool;
-    [SerializeField]
-    private int m_PoolSize;
-    [SerializeField]
     private GameObject m_Player;
+    private int m_PoolSize;
 
-    public hAudioManager(GameObject inPlayer, int inPoolSize = 3)
+    [SerializeField]
+    private AudioMixerGroup m_MixerGroup;
+    [SerializeField]
+    private float m_PitchWidth;
+
+    public int poolSize { get => m_PoolSize; set => m_PoolSize = value; }
+
+    public hAudioManager(GameObject inPlayer)
     {
         m_Player = inPlayer;
-        m_PoolSize = inPoolSize;
-
         m_AudioSourcePool = new List<AudioSource>();
+        m_PoolSize = 1;
 
         for (int i = 0; i < m_PoolSize; ++i)
             AddNewSource();
@@ -25,6 +31,8 @@ public class hAudioManager
     {
         var newSource = m_Player.AddComponent<AudioSource>();
         newSource.playOnAwake = false;
+        newSource.outputAudioMixerGroup = m_MixerGroup;
+        newSource.enabled = false;
         m_AudioSourcePool.Add(newSource);
         return newSource;
     }
@@ -52,9 +60,13 @@ public class hAudioManager
             m_AudioSourcePool.Add(source);
         }
 
-        source.pitch *= Random.Range(.85f, 1.15f);
+        source.enabled = true;
+        float min = 1f - m_PitchWidth;
+        float max = 1f + m_PitchWidth;
+        source.pitch *= Random.Range(min, max);
         source.clip = inClip;
         source.loop = inIsLoop;
+        source.spatialBlend = 1f;
         source.Play();
         return source;
     }
@@ -68,6 +80,7 @@ public class hAudioManager
             {
                 source.Stop();
                 source.clip = null;
+                source.enabled = false;
                 break;
             }
         }
