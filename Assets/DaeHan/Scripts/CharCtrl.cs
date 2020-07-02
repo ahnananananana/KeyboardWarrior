@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharCtrl : MonoBehaviour
+public class CharCtrl : Character
 {
-    public enum STATE // 캐릭터 상태
+    public enum CTRLSTATE // 캐릭터 상태
     {
         CREATE,IDLE,WALK,ROLL,ATTACK,DEAD
     }
-    public STATE state = STATE.CREATE;
+    public CTRLSTATE ctrlstate = CTRLSTATE.CREATE;
 
     public enum WEAPONTYPE // 사용중인 무기 종류
     {
         BOW,GUN,SWORD
     }
     public WEAPONTYPE weapontype = WEAPONTYPE.BOW;
+
+    public enum LAYERSTATE
+    {
+        PLAYER, IMMORTAL
+    }
+    LAYERSTATE layerstate = LAYERSTATE.PLAYER;
 
     protected struct MoveData
     {
@@ -43,6 +49,8 @@ public class CharCtrl : MonoBehaviour
     public Transform BulletMuzzleTR;
     public Transform SwordAtkBoxTR;
 
+    Vector3 MousePos = Vector3.zero;
+
     public GameObject TargettingMonster;
 
     public bool isAttacking = false;
@@ -54,10 +62,6 @@ public class CharCtrl : MonoBehaviour
     public float m_AttackRotSpeed = 1200f;
     public float m_RollSpeed = 10.0f;
 
-    //----------삭제할 변수----------//
-    public float m_MoveSpeed = 10.0f;
-    //-------------------------------//
-
     public LayerMask m_GroundLayer;
     public LayerMask m_MonsterLayer;
 
@@ -67,9 +71,11 @@ public class CharCtrl : MonoBehaviour
     public RuntimeAnimatorController BowAni;
     public RuntimeAnimatorController GunAni;
     public RuntimeAnimatorController SwordAni;
-    public Projectile proj;
 
+    public Projectile proj;
+    public Player player;
     public Character character;
+
     private void Awake()
     {
         UsingWeaponTR = BowTR;
@@ -82,7 +88,7 @@ public class CharCtrl : MonoBehaviour
 
     private void Update()   
     {
-        StateProcess();
+        CtrlStateProcess();
     }
 
     private void OnParticleCollision(GameObject other)
@@ -91,14 +97,14 @@ public class CharCtrl : MonoBehaviour
     }
 
 
-    protected virtual void StateProcess()
+    protected virtual void CtrlStateProcess()
     {
-        switch (state)
+        switch (ctrlstate)
         {
-            case STATE.CREATE:
-                ChangeState(STATE.IDLE);
+            case CTRLSTATE.CREATE:
+                ChangeCtrlState(CTRLSTATE.IDLE);
                 break;
-            case STATE.IDLE:
+            case CTRLSTATE.IDLE:
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
                 {
                     Picking(true);
@@ -116,7 +122,7 @@ public class CharCtrl : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.D))
                 {
-                    ChangeState(STATE.ROLL);
+                    ChangeCtrlState(CTRLSTATE.ROLL);
                 }
 
                 //------------------지울거-------------------//
@@ -132,13 +138,9 @@ public class CharCtrl : MonoBehaviour
                 {
                     ChangeWeapon(WEAPONTYPE.SWORD, Sword_Obj);
                 }
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    ChangeState(STATE.DEAD);
-                }
                 //-------------------------------------------//
                 break;
-            case STATE.WALK:
+            case CTRLSTATE.WALK:
                 if (Input.GetMouseButtonUp(0))
                 {
                     isMoving = false;
@@ -146,47 +148,65 @@ public class CharCtrl : MonoBehaviour
                 Rotating(m_RotSpeed);
                 Moving(true);
                 break;
-            case STATE.ROLL:
+            case CTRLSTATE.ROLL:
                 if (Input.GetMouseButtonUp(0))
                 {
                     isMoving = false;
                 }
                 Roll();
                 break;
-            case STATE.ATTACK:
+            case CTRLSTATE.ATTACK:
                 if (Input.GetMouseButtonUp(0))
                 {
                     isAttacking = false;
                 }
                 Rotating(m_AttackRotSpeed);
                 break;
-            case STATE.DEAD:
+            case CTRLSTATE.DEAD:
                 break;
         }
     }
 
-    protected virtual void ChangeState(STATE s)
+    protected virtual void ChangeCtrlState(CTRLSTATE s)
     {
-        if (state == s) return;
-        state = s;
+        if (ctrlstate == s) return;
+        ctrlstate = s;
 
         switch (s)
         {
-            case STATE.CREATE:
+            case CTRLSTATE.CREATE:
                 break;
-            case STATE.IDLE:
+            case CTRLSTATE.IDLE:
                 break;
-            case STATE.WALK:
+            case CTRLSTATE.WALK:
                 ReadyMove();
                 break;
-            case STATE.ROLL:
+            case CTRLSTATE.ROLL:
+                MousePicking();
+                this.transform.LookAt(MousePos, this.transform.up);
                 UsingAni.SetTrigger("Roll");
+                ChangeLayer(LAYERSTATE.IMMORTAL);
                 break;
-            case STATE.ATTACK:
+            case CTRLSTATE.ATTACK:
                 Attack();
                 break;
-            case STATE.DEAD:
+            case CTRLSTATE.DEAD:
                 Dead();
+                break;
+        }
+    }
+
+    void ChangeLayer(LAYERSTATE s)
+    {
+        layerstate = s;
+
+        switch (s)
+        {
+            case LAYERSTATE.PLAYER:
+                this.gameObject.layer = LayerMask.NameToLayer("Player");
+                break;
+            case LAYERSTATE.IMMORTAL:
+                this.gameObject.layer = LayerMask.NameToLayer("Immortal");
                 break;
         }
     }
@@ -231,7 +251,7 @@ public class CharCtrl : MonoBehaviour
     protected void Attack()
     {
         ReadyMove();
-        //Ani.Play("Idle");
+        UsingAni.SetFloat("AttackSpeed", player.m_AttackSpeed.m_CurrentValue);
         UsingAni.SetTrigger("Attack");
     }
 
@@ -251,6 +271,7 @@ public class CharCtrl : MonoBehaviour
         proj = obj.GetComponent<Projectile>();
         obj.transform.position = BulletMuzzleTR.position;
         obj.transform.rotation = this.transform.rotation;
+        proj.character = GetComponent<Player>();
         proj.OnFire(BulletMuzzleTR.forward);
     }
 
@@ -265,35 +286,63 @@ public class CharCtrl : MonoBehaviour
     {
         StopAllCoroutines();
         UsingAni.Play("Death");
-    }  
+    }
 
-    protected void Picking(bool LeftControl)
+    protected void MousePicking()
     {
         if (m_MainCamera == null) m_MainCamera = Camera.main;
         Ray ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (LeftControl == false && isAttacking == false && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f, m_MonsterLayer))
+        if (Physics.Raycast(ray, out hit, 1000.0f, m_GroundLayer))
+        {
+            MousePos.x = hit.point.x;
+            MousePos.z = hit.point.z;
+        }
+    }
+
+    protected void Picking(bool LeftControl) // 캐릭터 이동&공격시 클릭을 하면 호출할 함수
+    {
+        if (m_MainCamera == null) m_MainCamera = Camera.main;
+
+        Ray ray = m_MainCamera.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        if (LeftControl == false && isAttacking == false && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f, m_MonsterLayer)) // 타겟팅 공격 시작시 1회 호출되어 몬스터의 정보를 담기 위함
         {
             isAttacking = true;
 
-            Vector3 pos = transform.position;
-            pos.x = hit.transform.gameObject.transform.position.x;
-            pos.z = hit.transform.gameObject.transform.position.z;
-
             TargettingMonster = hit.transform.gameObject;
             m_MoveData.TargetPosition = TargettingMonster.transform.position;
+            ReadyMove();
 
-            if (UsingAni.GetBool("Walk") == true)
-                UsingAni.SetBool("Walk", false);
-
-            ChangeState(STATE.ATTACK);
+            if (bLongDistAtk == false && m_MoveData.MoveDist > 4f)
+            {
+                ChangeCtrlState(CTRLSTATE.WALK);
+            }
+            else
+            {
+                if (UsingAni.GetBool("Walk") == true)
+                    UsingAni.SetBool("Walk", false);
+                ChangeCtrlState(CTRLSTATE.ATTACK);
+            }
         }
-        else if (LeftControl == false && isAttacking == true && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f))
+        else if (LeftControl == false && isAttacking == true && isMoving == false && Physics.Raycast(ray, out hit, 1000.0f)) // 타겟팅 공격시 마우스를 쭉 누르고 있을 떄
         {
             m_MoveData.TargetPosition = TargettingMonster.transform.position;
+            ReadyMove();
 
-            ChangeState(STATE.ATTACK);
+            if (bLongDistAtk == false && m_MoveData.MoveDist > 4f /*사정거리*/)
+            {
+                ChangeCtrlState(CTRLSTATE.WALK);
+            }
+            else
+            {
+                if (UsingAni.GetBool("Walk") == true)
+                    UsingAni.SetBool("Walk", false);
+                ChangeCtrlState(CTRLSTATE.ATTACK);
+            }
         }
         else if (Physics.Raycast(ray, out hit, 1000.0f, m_GroundLayer))
         {
@@ -306,11 +355,11 @@ public class CharCtrl : MonoBehaviour
             {
                 case false:
                     isMoving = true;
-                    ChangeState(STATE.WALK);
+                    ChangeCtrlState(CTRLSTATE.WALK);
                     break;
                 case true:
                     isAttacking = true;
-                    ChangeState(STATE.ATTACK);
+                    ChangeCtrlState(CTRLSTATE.ATTACK);
                     break;
             }
         }
@@ -337,6 +386,7 @@ public class CharCtrl : MonoBehaviour
     {
         if (UsingAni.GetBool("Walk") == false)
         {
+            UsingAni.SetFloat("WalkSpeed", player.m_MoveSpeed.m_CurrentValue);
             UsingAni.SetBool("Walk", true);
         }
 
@@ -344,7 +394,7 @@ public class CharCtrl : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
-                ChangeState(STATE.IDLE);
+                ChangeCtrlState(CTRLSTATE.IDLE);
 
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
@@ -359,11 +409,11 @@ public class CharCtrl : MonoBehaviour
             {
                 UsingAni.SetBool("Walk", false);
                 UsingAni.Play("Idle"); // 구르기 시전 딜레이때문에 넣음
-                ChangeState(STATE.ROLL);
+                ChangeCtrlState(CTRLSTATE.ROLL);
             }
         }
 
-        float delta = m_MoveSpeed * Time.smoothDeltaTime;
+        float delta = character.m_MoveSpeed.m_BaseValue * Time.smoothDeltaTime;
         if (m_MoveData.MoveDist - delta < 0.0f)
         {
             delta = m_MoveData.MoveDist;
@@ -377,7 +427,7 @@ public class CharCtrl : MonoBehaviour
         if (m_MoveData.MoveDist < 0.01f)
         {
             UsingAni.SetBool("Walk", false);
-            ChangeState(STATE.IDLE);
+            ChangeCtrlState(CTRLSTATE.IDLE);
         }
     }
 
@@ -412,7 +462,7 @@ public class CharCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider obj)
     {
-        if (obj.tag == "AtkBox" && state == STATE.IDLE)
+        if (obj.tag == "AtkBox" && ctrlstate == CTRLSTATE.IDLE)
         {
             UsingAni.SetTrigger("Hit"); // 상체 애니메이션만 해야함
         }

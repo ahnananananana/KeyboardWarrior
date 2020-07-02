@@ -28846,7 +28846,7 @@ AnimationClip:
   - time: 0.23333333
     functionName: BowFire
     data: 
-    objectReferenceParameter: {fileID: -927199367670048503, guid: 1b76ed26df6d5ad468c351cbfa3e09af,
+    objectReferenceParameter: {fileID: 841273533106184775, guid: 878094251e4306744bbf1e4143b60c9c,
       type: 3}
     floatParameter: 0
     intParameter: 0

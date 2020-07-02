@@ -62,8 +62,8 @@ public class Projectile : MonoBehaviour
                 if (Obj_GunFireEffect != null)
                 {
                     GameObject obj = Instantiate(Obj_GunFireEffect);
-                    obj.transform.position = this.transform.position;
-                    obj.transform.rotation = this.transform.rotation;
+                    obj.transform.position = transform.position;
+                    obj.transform.rotation = transform.rotation;
                 }
                 break;
             case STATE.CRASH:

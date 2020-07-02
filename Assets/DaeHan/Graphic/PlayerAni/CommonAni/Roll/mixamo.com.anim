@@ -89248,7 +89248,16 @@ AnimationClip:
   - time: 1.0666667
     functionName: ChangeCtrlState
     data: CTRLSTATE.IDLE
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 841273533106184775, guid: 878094251e4306744bbf1e4143b60c9c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1666666
+    functionName: ChangeLayer
+    data: LAYERSTATE.PLAYER
+    objectReferenceParameter: {fileID: 841273533106184775, guid: 878094251e4306744bbf1e4143b60c9c,
+      type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
